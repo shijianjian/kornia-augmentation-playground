@@ -1,0 +1,3 @@
+<div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+  <kornia-augmentation-item class="example-box" *ngFor="let movie of movies" cdkDrag [name]="movie"></kornia-augmentation-item>
+</div>

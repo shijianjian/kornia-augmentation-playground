@@ -1,0 +1,17 @@
+<!-- <form class="example-container" [formGroup]="options" [style.fontSize.px]="getFontSize()">
+  <mat-form-field *ngFor="let item of data" appearance="fill">
+    <mat-label>{{item.name}}</mat-label>
+    <ng-container *ngIf="item.category == 'select'">
+      <mat-select [formControl]="colorControl">
+        <mat-option value="primary">Primary</mat-option>
+        <mat-option value="accent">Accent</mat-option>
+        <mat-option value="warn">Warn</mat-option>
+      </mat-select>
+    </ng-container>
+  </mat-form-field>
+</form> -->
+
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form"></formly-form>
+  <button type="submit" class="btn btn-primary submit-button" [disabled]="!form.valid">Submit</button>
+</form>
