@@ -4,26 +4,29 @@
     *ngFor="let item of augmentationList; let i = index;"
     cdkDrag
     (formUpdated)="onFormUpdated($event, i)"
-    [item]="item">xxxxxx</kornia-augmentation-item>
-  <div style="display: flex; justify-content: space-between; margin: auto;">
+    [item]="item"></kornia-augmentation-item>
+  <div style="display: flex; justify-content: space-between; margin: auto; padding: 15px;">
     <div style="display: flex; justify-content: center; align-items: center;">
       <div>
         <mat-slide-toggle color="primary" [(ngModel)]="isDebugMode"></mat-slide-toggle>
-        <p>Debug Mode</p>
+        <span>Debug Mode</span>
       </div>
     </div>
     <button mat-fab color="primary" (click)="addNewAugmentation()">
       <mat-icon>add</mat-icon>
     </button>
     <ng-container *ngIf="!isDebugMode">
-      <button mat-fab color="primary" (click)="addNewAugmentation()">
+      <button mat-fab color="primary" (click)="runAll()">
         <mat-icon>play_arrow</mat-icon>
       </button>
     </ng-container>
-    <ng-container *ngIf="isDebugMode">
-      <button mat-fab color="primary" (click)="addNewAugmentation()">
+    <div *ngIf="isDebugMode">
+      <button mat-fab color="primary" (click)="runOneStep()">
         <mat-icon>skip_next</mat-icon>
       </button>
-    </ng-container>
+      <button mat-fab color="primary" (click)="clearSteps()">
+        <mat-icon>refresh</mat-icon>
+      </button>
+    </div>
   </div>
 </div>

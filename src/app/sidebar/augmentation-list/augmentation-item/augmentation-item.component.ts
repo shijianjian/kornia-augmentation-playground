@@ -18,6 +18,7 @@ export class AugmentationItemComponent {
 
   onFormUpdated(fields: object) {
     this.fields = fields;
+    fields['name'] = this.item['name'];
     this.formUpdated.emit(fields);
   }
 

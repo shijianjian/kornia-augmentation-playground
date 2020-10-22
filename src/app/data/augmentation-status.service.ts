@@ -37,6 +37,12 @@ export class AugmentationStatusService {
     if ((name == "RandomHorizontalFlip") || (name == "RandomVerticalFlip")) {
       return of(this.getCommonDefault());
     }
+    if (name == "ColorJitter") {
+      return of(this.getCommonDefault());
+    }
+    if (name == "RandomAffine") {
+      return of(this.getCommonDefault());
+    }
     return of({
       "firstName": "Joan",
       "lastName": "of Arc"
@@ -46,6 +52,12 @@ export class AugmentationStatusService {
   getFields(name: string): Observable<any> {
     // return this.http.get<FormlyFieldConfig[]>('assets/json-powered/user-form_json');
     if ((name == "RandomHorizontalFlip") || (name == "RandomVerticalFlip")) {
+      return of(this.getCommonFields());
+    }
+    if (name == "ColorJitter") {
+      return of(this.getCommonFields());
+    }
+    if (name == "RandomAffine") {
       return of(this.getCommonFields());
     }
     return of([

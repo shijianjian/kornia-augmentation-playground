@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { AugmentationService } from 'src/app/augmentation.service';
 
 @Component({
   selector: 'kornia-augmentation-list',
@@ -12,6 +13,7 @@ export class AugmentationListComponent implements OnInit {
 
   formData = [];
   new_ele = 0
+  current_step = 0
 
   augmentationList = [
     {name: 'RandomHorizontalFlip', number: this.new_ele},
@@ -49,7 +51,28 @@ export class AugmentationListComponent implements OnInit {
     }
   }
 
-  constructor() { }
+  runOneStep() {
+    if (this.current_step >= this.formData.length) {
+      alert("Already finished. Will start over.")
+      this.clearSteps();
+      return
+    }
+    this.augmentationService.setting = this.formData[this.current_step];
+    this.augmentationService.computeAugmentation()
+    this.current_step += 1;
+  }
+
+  runAll() {
+    for (let i = this.current_step; i < this.formData.length; i ++) {
+      this.runOneStep();
+    }
+  }
+
+  clearSteps() {
+    this.current_step = 0;
+  }
+
+  constructor(private augmentationService: AugmentationService) { }
 
   ngOnInit() {
   }

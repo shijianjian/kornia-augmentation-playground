@@ -5,24 +5,24 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 
-import { PlatformComponent } from './platform/platform.component';
-import { AugmentationListModule } from './augmentation-list/augmentation-list.module';
+import { PlaygroundComponent } from './playground.component';
 import { ImageUploaderComponent } from './image-uploader/image-uploader.component';
+import { ResultsModule } from './results/results.module';
 
 @NgModule({
   declarations: [
-    PlatformComponent,
+    PlaygroundComponent,
     ImageUploaderComponent,
   ],
   imports: [
     CommonModule,
     HttpClientModule,
     NgxDropzoneModule,
-    AugmentationListModule,
     MatIconModule,
+    ResultsModule
   ],
   exports: [
-    PlatformComponent
+    PlaygroundComponent
   ]
 })
 export class KorniaPlaygroundModule { }

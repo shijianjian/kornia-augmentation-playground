@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { KorniaResultsComponent } from './kornia-results.component';
+import { ResultsViewerComponent } from './results-viewer.component';
 
-describe('KorniaResultsComponent', () => {
-  let component: KorniaResultsComponent;
-  let fixture: ComponentFixture<KorniaResultsComponent>;
+describe('ResultsViewerComponent', () => {
+  let component: ResultsViewerComponent;
+  let fixture: ComponentFixture<ResultsViewerComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ KorniaResultsComponent ]
+      declarations: [ ResultsViewerComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(KorniaResultsComponent);
+    fixture = TestBed.createComponent(ResultsViewerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
