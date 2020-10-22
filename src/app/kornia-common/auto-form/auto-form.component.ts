@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
 
 import { AugmentationStatusService } from '../../data/augmentation-status.service';
@@ -9,24 +9,47 @@ import { AugmentationStatusService } from '../../data/augmentation-status.servic
   templateUrl: './auto-form.component.html',
   styleUrls: ['./auto-form.component.css']
 })
-export class AutoFormComponent {
+export class AutoFormComponent implements OnInit {
+
+  @Input() defaultAugmentation: string
+  @Output() augmentationSelected = new EventEmitter<string>();
+  @Output() formUpdated = new EventEmitter<object>();
 
   form: FormGroup;
   options: FormlyFormOptions = {};
   model: any;
   fields: FormlyFieldConfig[];
 
+  selectedAugmentation: string;
+  selectionList: [];
+
   constructor(private augmentationStatusService: AugmentationStatusService) {
-    this.augmentationStatusService.getUserData().subscribe(([model, fields]) => {
-      this.form = new FormGroup({});
+    this.augmentationStatusService.getAugmentationList().subscribe(selectionList => {
+      this.form = new FormGroup({augmentation: new FormControl('')});
+      this.selectionList = selectionList;
+    });
+  }
+
+  ngOnInit() {
+    if (this.defaultAugmentation != undefined) {
+      this.form.controls['augmentation'].setValue(this.defaultAugmentation);
+      this.onSelectionChange({value: this.defaultAugmentation});
+    }
+  }
+
+  onSelectionChange(event) {
+    this.selectedAugmentation = event.value;
+    this.augmentationSelected.emit(event.value);
+    this.augmentationStatusService.getAugmentationFieldData(event.value).subscribe(([model, fields]) => {
       this.model = model;
       this.fields = this.mapFields(fields);
+      this.submit();
     });
   }
 
   submit() {
     if (this.form.valid) {
-      alert(JSON.stringify(this.model));
+      this.formUpdated.emit(Object.assign({}, this.model));
     }
   }
 
@@ -35,11 +58,6 @@ export class AutoFormComponent {
    */
   mapFields(fields: FormlyFieldConfig[]) {
     return fields.map(f => {
-      // Bind an observable to `color` field.
-      if (f.key === 'color') {
-        f.type = 'radio';
-        f.templateOptions.options = this.augmentationStatusService.getColors();
-      }
       return f;
     });
   }

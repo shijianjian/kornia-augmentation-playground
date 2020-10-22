@@ -1,17 +1,24 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+
 
 @Component({
   selector: 'kornia-augmentation-item',
   templateUrl: './augmentation-item.component.html',
   styleUrls: ['./augmentation-item.component.css']
 })
-export class AugmentationItemComponent implements OnInit {
+export class AugmentationItemComponent {
 
-  @Input() name: string;
+  @Input() item: object;
+  @Output() formUpdated = new EventEmitter<object>();
 
-  constructor() { }
+  fields;
 
-  ngOnInit() {
+  constructor() {
+  }
+
+  onFormUpdated(fields: object) {
+    this.fields = fields;
+    this.formUpdated.emit(fields);
   }
 
 }

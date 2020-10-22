@@ -12,6 +12,18 @@
 </form> -->
 
 <form [formGroup]="form" (ngSubmit)="submit()">
-  <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form"></formly-form>
-  <button type="submit" class="btn btn-primary submit-button" [disabled]="!form.valid">Submit</button>
+  <div style="display: flex; justify-content: space-between;">
+    <mat-form-field appearance="fill">
+      <mat-label>Augmentation</mat-label>
+      <mat-select (selectionChange)="onSelectionChange($event);" formControlName="augmentation">
+        <mat-option *ngFor="let item of selectionList" [value]="item">
+          {{item}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div *ngIf="selectedAugmentation" style="flex-grow: 0.8;">
+      <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form"></formly-form>
+      <button type="submit" class="btn btn-primary submit-button" [disabled]="!form.valid">Confirm</button>
+    </div>
+  </div>
 </form>

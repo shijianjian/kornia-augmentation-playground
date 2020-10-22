@@ -8,20 +8,46 @@ import { of } from 'rxjs';
 export class AugmentationStatusService {
   constructor(private http: HttpClient) {}
 
-  getUserData(): Observable<any> {
-    return forkJoin([this.getUser(), this.getFields()]);
+  getAugmentationFieldData(name: string): Observable<any> {
+    return forkJoin([this.getDefault(name), this.getFields(name)]);
   }
 
-  getUser() {
+  getAugmentationList(): Observable<any> {
+    return of([
+      'RandomHorizontalFlip',
+      'RandomVerticalFlip',
+      'RandomRotation',
+      'RandomAffine',
+      'RandomPerspective',
+      'RandomErasing',
+      'CenterCrop',
+      'RandomCrop',
+      'RandomResizedCrop',
+      'RandomMotionBlur',
+      'ColorJitter',
+      'RandomGrayscale',
+      'RandomSolarize',
+      'RandomPosterize',
+      'RandomEqualize',
+    ])
+  }
+
+  getDefault(name: string): Observable<any>  {
     // return this.http.get<{ firstName: string, lastName: string }>('assets/json-powered/user_json');
+    if ((name == "RandomHorizontalFlip") || (name == "RandomVerticalFlip")) {
+      return of(this.getCommonDefault());
+    }
     return of({
       "firstName": "Joan",
       "lastName": "of Arc"
     })
   }
 
-  getFields() {
+  getFields(name: string): Observable<any> {
     // return this.http.get<FormlyFieldConfig[]>('assets/json-powered/user-form_json');
+    if ((name == "RandomHorizontalFlip") || (name == "RandomVerticalFlip")) {
+      return of(this.getCommonFields());
+    }
     return of([
       {
         "key": "firstName",
@@ -47,9 +73,23 @@ export class AugmentationStatusService {
       },
       {
         "key": "color",
-        "type": "input",
+        "type": "radio",
         "templateOptions": {
-          "label": "Color Preference (try this out)"
+          "label": "Color Preference (try this out)",
+          "options": [
+            {
+              "label": "No Preference",
+              "value": null
+            },
+            {
+              "label": "Green",
+              "value": "green"
+            },
+            {
+              "label": "Blue",
+              "value": "blue"
+            }
+          ]
         }
       },
       {
@@ -66,21 +106,25 @@ export class AugmentationStatusService {
     ])
   }
 
-  getColors() {
-    // return this.http.get<{ label: string; value: string }[]>('assets/json-powered/colors_json');
-    return of([
-      {
-        "label": "No Preference",
-        "value": null
-      },
-      {
-        "label": "Green",
-        "value": "green"
-      },
-      {
-        "label": "Blue",
-        "value": "blue"
-      }
-    ])
+  getCommonDefault() {
+    return {"p": 0.5}
   }
+
+  getCommonFields() {
+    return [{
+      key: "p",
+      type: "input",
+      templateOptions: {
+        label: "Probablities of applying the augmentation",
+        pattern: "^(0(\.[0-9]{1,4})?|1(\.0{1,4})?)$"
+      },
+      validation: {
+        messages: {
+          pattern: (error, field: FormlyFieldConfig) => `Expected to be within 0 to 1. Got "${field.formControl.value}".`,
+        },
+      },
+    }]
+  }
+
+
 }
