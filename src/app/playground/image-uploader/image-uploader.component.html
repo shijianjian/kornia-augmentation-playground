@@ -1,5 +1,5 @@
 <div>
-<ngx-dropzone (change)="onSelect($event)" style="position: relative;">
+<ngx-dropzone (change)="onSelect($event)" style="position: relative; height: 250px;">
   <ngx-dropzone-label *ngIf="!imgURL">{{title}}</ngx-dropzone-label>
 
   <ng-container *ngIf="imgURL">

@@ -7,10 +7,12 @@
     [item]="item"></kornia-augmentation-item>
   <div style="display: flex; justify-content: space-between; margin: auto; padding: 15px;">
     <div style="display: flex; justify-content: center; align-items: center;">
-      <div>
+      <!-- Disable this for now -->
+      <div style="opacity: 0;">
         <mat-slide-toggle color="primary" [(ngModel)]="isDebugMode"></mat-slide-toggle>
         <span>Debug Mode</span>
       </div>
+      <!-- Disable above -->
     </div>
     <button mat-fab color="primary" (click)="addNewAugmentation()">
       <mat-icon>add</mat-icon>

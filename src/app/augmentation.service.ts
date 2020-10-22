@@ -1,6 +1,6 @@
 
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, forkJoin, BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -25,12 +25,21 @@ export class AugmentationService {
       alert("Image or augmentation setting is not defined")
       return
     }
-    alert(this.image.name + JSON.stringify(this.setting));
-    this.results.next(["A", "B", "C"]);
+    // alert(this.image.name + JSON.stringify(this.setting));
+    this._computeAugmentationByServer()
   }
 
   private _computeAugmentationByServer() {
-
+    var fileReader = new FileReader();
+    fileReader.readAsDataURL(this._image)
+    fileReader.onload = () => {
+        const formData = new FormData();  
+        formData.append('file', this.image); 
+        formData.append('setting', JSON.stringify(this.setting)); 
+        this.http.post("http://localhost:7000/augmentation/compute", formData).subscribe(data => {
+          this.results.next(data);
+        })
+     }
   }
 
   private _computeAugmentationByONNX() {

@@ -1,1 +1,4 @@
-{{ results }}
+<div *ngIf="results?.length != 0">RESULTS</div>
+<div *ngFor="let base64 of results">
+    <img src="data:image/png;base64,{{base64}}" style="width: 48%; float:left;">
+</div>

@@ -35,13 +35,15 @@ export class AugmentationStatusService {
   getDefault(name: string): Observable<any>  {
     // return this.http.get<{ firstName: string, lastName: string }>('assets/json-powered/user_json');
     if ((name == "RandomHorizontalFlip") || (name == "RandomVerticalFlip")) {
-      return of(this.getCommonDefault());
+      return of({p: 0.5});
     }
     if (name == "ColorJitter") {
-      return of(this.getCommonDefault());
+      return of({
+        p: 0.5, brightness: 0.5, contrast: 0.5, saturation: 0.5, hue: 0.3
+      });
     }
     if (name == "RandomAffine") {
-      return of(this.getCommonDefault());
+      return of({p: 0.5});
     }
     return of({
       "firstName": "Joan",
@@ -52,13 +54,19 @@ export class AugmentationStatusService {
   getFields(name: string): Observable<any> {
     // return this.http.get<FormlyFieldConfig[]>('assets/json-powered/user-form_json');
     if ((name == "RandomHorizontalFlip") || (name == "RandomVerticalFlip")) {
-      return of(this.getCommonFields());
+      return of([this.getCommonFields("p")]);
     }
     if (name == "ColorJitter") {
-      return of(this.getCommonFields());
+      return of([
+        this.getCommonFields("brightness"),
+        this.getCommonFields("contrast"),
+        this.getCommonFields("saturation"),
+        this.getCommonFields("hue"),
+        this.getCommonFields("p"),
+      ]);
     }
     if (name == "RandomAffine") {
-      return of(this.getCommonFields());
+      return of([this.getCommonFields("p")]);
     }
     return of([
       {
@@ -118,15 +126,12 @@ export class AugmentationStatusService {
     ])
   }
 
-  getCommonDefault() {
-    return {"p": 0.5}
-  }
-
-  getCommonFields() {
-    return [{
-      key: "p",
+  getCommonFields(key) {
+    return {
+      key: key,
       type: "input",
       templateOptions: {
+        type: "number",
         label: "Probablities of applying the augmentation",
         pattern: "^(0(\.[0-9]{1,4})?|1(\.0{1,4})?)$"
       },
@@ -135,7 +140,7 @@ export class AugmentationStatusService {
           pattern: (error, field: FormlyFieldConfig) => `Expected to be within 0 to 1. Got "${field.formControl.value}".`,
         },
       },
-    }]
+    }
   }
 
 

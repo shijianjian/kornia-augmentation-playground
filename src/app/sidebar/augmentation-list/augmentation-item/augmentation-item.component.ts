@@ -1,6 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
-
 @Component({
   selector: 'kornia-augmentation-item',
   templateUrl: './augmentation-item.component.html',
@@ -17,9 +16,10 @@ export class AugmentationItemComponent {
   }
 
   onFormUpdated(fields: object) {
-    this.fields = fields;
-    fields['name'] = this.item['name'];
-    this.formUpdated.emit(fields);
+    this.fields = {};
+    this.fields['name'] = this.item['name'];
+    this.fields['kwargs'] = fields;
+    this.formUpdated.emit(this.fields);
   }
 
 }

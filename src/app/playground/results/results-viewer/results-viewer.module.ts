@@ -7,7 +7,7 @@ import { ResultsViewerComponent } from './results-viewer.component';
     ResultsViewerComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
   ],
   exports: [
     ResultsViewerComponent
