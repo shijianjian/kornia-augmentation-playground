@@ -8,7 +8,7 @@ import kornia
 import numpy as np
 from PIL import Image
 
-from kornia_augmentation import create_pipeline, create_image_tensor
+from kornia_augmentation import create_pipeline, create_image_tensor, generate_pipeline_code
 
 app = Flask(__name__)
 # TODO: Remove the following after https://github.com/pallets/flask/issues/2549
@@ -32,6 +32,14 @@ def augmentation_compute():
 	res = pip(image_tensor)
 	out = tensor_to_images(res)
 	return jsonify(out)
+
+@app.route('/augmentation/getcode', methods=['POST'])
+def get_augmentation_code():
+	print(request.form['setting'])
+	in_setting = eval(request.form['setting'])
+	print(in_setting)
+	res = generate_pipeline_code(in_setting)
+	return jsonify({"code": res})
 
 
 def tensor_to_images(tensor):

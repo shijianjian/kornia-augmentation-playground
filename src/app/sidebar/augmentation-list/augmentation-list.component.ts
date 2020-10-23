@@ -38,12 +38,14 @@ export class AugmentationListComponent implements OnInit {
     } else {
       this.formData.push(data);
     }
+    this.augmentationService.formData = this.formData
   }
 
   updateFormDataIndex(previousIndex: number, currentIndex: number) {
     let element = this.formData[previousIndex];
     this.formData.splice(previousIndex, 1);
     this.formData.splice(currentIndex, 0, element);
+    this.augmentationService.formData = this.formData
   }
 
   runOneStep() {
@@ -52,18 +54,16 @@ export class AugmentationListComponent implements OnInit {
       this.clearSteps();
       return
     }
-    this.augmentationService.setting = this.formData[this.current_step];
-    this.augmentationService.computeAugmentation();
+    this.augmentationService.computeAugmentation(this.current_step);
     this.current_step += 1;
   }
 
   runAll() {
-    let theRestFormData = []
+    let theRestIdx = []
     for (let i = this.current_step; i < this.formData.length; i ++) {
-      theRestFormData.push(this.formData[i]);
+      theRestIdx.push(i);
     }
-    this.augmentationService.setting = theRestFormData;
-    this.augmentationService.computeAugmentation();
+    this.augmentationService.computeAugmentation(theRestIdx);
   }
 
   clearSteps() {
@@ -73,6 +73,7 @@ export class AugmentationListComponent implements OnInit {
   constructor(private augmentationService: AugmentationService) { }
 
   ngOnInit() {
+    this.augmentationService.formData = this.formData
   }
 
 }

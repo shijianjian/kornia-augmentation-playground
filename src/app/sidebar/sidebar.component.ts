@@ -1,15 +1,37 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AugmentationService } from '../augmentation.service';
 
 @Component({
   selector: 'kornia-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit, OnDestroy {
 
-  constructor() { }
+  codes = "";
+  codes_sub;
+  isDisplayingCode = false;
+
+  constructor(private augmentationService: AugmentationService) {
+  }
 
   ngOnInit() {
+    this.codes_sub = this.augmentationService.codes.subscribe(data => {
+      this.codes = data['code'];
+    });
+  }
+
+  ngOnDestroy() {
+    this.codes_sub.unsubscribe()
+  }
+
+  onGetCode() {
+    this.augmentationService.getAugmentationCode();
+    this.isDisplayingCode = !this.isDisplayingCode;
+  }
+
+  onGetModel() {
+
   }
 
 }

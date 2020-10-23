@@ -2,11 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 
-import { MatIconModule, MatSidenavModule } from '@angular/material';
+import { MatIconModule, MatSidenavModule, MatTooltipModule } from '@angular/material';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 
 import { AugmentationListModule } from './augmentation-list/augmentation-list.module';
 import { SidebarComponent } from './sidebar.component';
+import { AugmentationService } from '../augmentation.service';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,11 @@ import { SidebarComponent } from './sidebar.component';
     NgxDropzoneModule,
     MatIconModule,
     MatSidenavModule,
+    MatTooltipModule,
     AugmentationListModule,
+  ],
+  providers: [
+    AugmentationService
   ],
   exports: [
     SidebarComponent

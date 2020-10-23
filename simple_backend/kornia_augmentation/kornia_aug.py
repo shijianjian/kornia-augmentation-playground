@@ -16,8 +16,20 @@ def create_image_tensor(image, num: int = 8):
     return kornia.image_to_tensor(image, keepdim=False).repeat(num, 1, 1, 1)
 
 
+def generate_pipeline_code(settings):
+    code = ""
+    for setting in settings:
+        name = setting['name']
+        kwargs = setting['kwargs']
+        k_string = ', '.join('%s=%r' % x for x in kwargs.items())
+        code += f"\n    {name}({k_string}),"
+
+    code = f"nn.Sequential({code[:-1]}\n)"
+    return code
+
+
 if __name__ == '__main__':
-    x = create_pipeline([
+    settings = [
         {
             "name": 'RandomHorizontalFlip',
             "kwargs": {
@@ -30,5 +42,6 @@ if __name__ == '__main__':
                 "p": 1.0
             }
         }
-    ])
-    print(x)
+    ]
+    print(create_pipeline(settings))
+    print(generate_pipeline_code(settings))

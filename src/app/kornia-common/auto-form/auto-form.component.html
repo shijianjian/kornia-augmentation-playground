@@ -23,7 +23,8 @@
     </mat-form-field>
     <div *ngIf="selectedAugmentation" style="flex-grow: 0.8;">
       <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form"></formly-form>
-      <button type="submit" class="btn btn-primary submit-button" [disabled]="!form.valid">Confirm</button>
+      <button mat-button color="primary" [disabled]="!form.valid">Confirm</button>
+      <!-- <button type="submit" class="btn btn-primary submit-button" [disabled]="!form.valid">Confirm</button> -->
     </div>
   </div>
 </form>

@@ -1,3 +1,14 @@
 <mat-drawer-container class="example-container">
-  <kornia-augmentation-list></kornia-augmentation-list>
+  <div style="display: flex; justify-content: space-between;">
+    <div></div>
+    <div style="padding: 1px 5px;">
+      <mat-icon aria-hidden="false" matTooltip="Show code" (click)="onGetCode(); $event.stopPropagation();">code</mat-icon>
+      <mat-icon aria-hidden="false" matTooltip="Export ONNX model" style="display: none;"
+          (click)="onGetModel(); $event.stopPropagation();">get_app</mat-icon>
+    </div>
+  </div>
+  <kornia-augmentation-list [style.display]="isDisplayingCode ? 'none' : 'block'"></kornia-augmentation-list>
+  <div [style.display]="isDisplayingCode ? 'block' : 'none'" class="coding-block">
+    {{ codes }}
+  </div>
 </mat-drawer-container>

@@ -14,35 +14,51 @@ export class AugmentationService {
   public get image() { return this._image; }
   public set image(val) { this._image = val; }
 
-  private _setting;
-  public get setting() { return this._setting; }
-  public set setting(val) { this._setting = val; }
+  private _formData;
+  public get formData() { return this._formData; }
+  public set formData(val) { this._formData = val; }
 
   results = new BehaviorSubject<object>([])
+  codes = new BehaviorSubject<object>({code: ''})
 
-  computeAugmentation() {
-    if (this._image == undefined || this._setting == undefined) {
+  computeAugmentation(step_idx) {
+    if (this._image == undefined || this._formData == undefined) {
       alert("Image or augmentation setting is not defined")
       return
     }
+    let data = []
+    for (let i=0; i < step_idx.length; i ++) {
+      data.push(this.formData[step_idx])
+    }
     // alert(this.image.name + JSON.stringify(this.setting));
-    this._computeAugmentationByServer()
+    this._computeAugmentationByServer(data);
   }
 
-  private _computeAugmentationByServer() {
+  private _computeAugmentationByServer(data) {
     var fileReader = new FileReader();
     fileReader.readAsDataURL(this._image)
     fileReader.onload = () => {
         const formData = new FormData();  
         formData.append('file', this.image); 
-        formData.append('setting', JSON.stringify(this.setting)); 
+        formData.append('setting', JSON.stringify(data)); 
         this.http.post("http://localhost:7000/augmentation/compute", formData).subscribe(data => {
           this.results.next(data);
-        })
+        });
      }
   }
 
   private _computeAugmentationByONNX() {
     
   }
+
+  getAugmentationCode() {
+    const formData = new FormData();
+    formData.append('file', null); 
+    formData.append('setting', JSON.stringify(this._formData)); 
+    this.http.post("http://localhost:7000/augmentation/getcode", formData).subscribe(data => {
+      console.log(data['code'])
+      this.codes.next(data);
+    });
+  }
+
 }

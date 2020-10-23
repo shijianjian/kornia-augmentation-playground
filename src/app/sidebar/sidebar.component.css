@@ -6,3 +6,15 @@
   border: 1px solid #555;
   margin: 0;
 }
+
+mat-icon:hover {
+  cursor: pointer;
+}
+
+.coding-block {
+  white-space: pre-wrap;
+  padding: 10px;
+  border: 2px dotted #555;
+  margin: 0 10px;
+  border-radius: 10px;
+}

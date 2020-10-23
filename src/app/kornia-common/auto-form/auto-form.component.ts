@@ -34,6 +34,7 @@ export class AutoFormComponent implements OnInit {
     if (this.defaultAugmentation != undefined) {
       this.form.controls['augmentation'].setValue(this.defaultAugmentation);
       this.onSelectionChange({value: this.defaultAugmentation});
+      this.submit();
     }
   }
 
