@@ -1,0 +1,6 @@
+flask
+flask_cors
+scikit-image
+numpy
+pillow
+kornia == 0.4.1

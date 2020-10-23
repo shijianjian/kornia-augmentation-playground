@@ -14,6 +14,7 @@ $ ng serve
 In another terminal:
 ```bash
 $ cd simple_backend
+$ pip install -r requirements.txt
 $ python index.py
 ```
 
