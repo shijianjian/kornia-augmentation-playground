@@ -11,14 +11,17 @@ import { Subscription } from 'rxjs';
 export class ResultsViewerComponent implements OnInit, OnDestroy {
 
   private augmentationServiceSub: Subscription;
-  results;
+  images;
+  params;
 
   constructor(private augmentationService: AugmentationService) { }
 
   ngOnInit() {
-    this.augmentationServiceSub = this.augmentationService.results.subscribe(
-      res => this.results = res
-    );
+    this.augmentationServiceSub = this.augmentationService.results.subscribe(res => {
+      this.images = res['images'];
+      this.params = res['params'];
+      console.log(this.params[0])
+    });
   }
 
   ngOnDestroy() {

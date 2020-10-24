@@ -14,7 +14,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   codes_sub;
   current_step = 0
   isDisplayingCode = false;
-  augmentationType: string;
+  augmentationType: string = '2D';
 
   augmentationData = [];
   augmentationList = [];
@@ -63,12 +63,12 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   onAugmentationChanged(event) {
     this.augmentationData = event;
-    if (event == '2D') {
+    if (this.augmentationType == '2D') {
       this.augmentationList2D = this.augmentationData;
-    } else if (event == '3D') {
+    } else if (this.augmentationType == '3D') {
       this.augmentationList3D = this.augmentationData;
     } else {
-      console.error(`${event} is not implemented.`)
+      console.error(`${this.augmentationType} is not implemented.`)
     }
     this.augmentationService.formData = this.augmentationData;
   }

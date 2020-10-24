@@ -18,7 +18,7 @@ export class AugmentationService {
   public get formData() { return this._formData; }
   public set formData(val) { this._formData = val; }
 
-  results = new BehaviorSubject<object>([])
+  results = new BehaviorSubject<object>({images: [], params: []})
   codes = new BehaviorSubject<object>({code: ''})
 
   computeAugmentation(step_list) {

@@ -1,4 +1,9 @@
 <div *ngIf="results?.length != 0">RESULTS</div>
-<div *ngFor="let base64 of results">
-    <img src="data:image/png;base64,{{base64}}" style="width: 48%; float:left;">
+<div style="display: flex; flex-wrap: wrap;">
+    <div *ngFor="let base64 of images; let i = index;" style="position: relative; width: 50%;">
+        <div class="image-mask">
+            {{ params["" + i] | json }} 111
+        </div>
+        <img src="data:image/png;base64,{{base64}}" style="width: 100%; height: 100%;">
+    </div>
 </div>
