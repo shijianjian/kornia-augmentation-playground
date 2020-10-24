@@ -21,16 +21,16 @@ export class AugmentationService {
   results = new BehaviorSubject<object>([])
   codes = new BehaviorSubject<object>({code: ''})
 
-  computeAugmentation(step_idx) {
+  computeAugmentation(step_list) {
     if (this._image == undefined || this._formData == undefined) {
       alert("Image or augmentation setting is not defined")
       return
     }
     let data = []
-    for (let i=0; i < step_idx.length; i ++) {
-      data.push(this.formData[step_idx])
+    for (let i=0; i < step_list.length; i ++) {
+      data.push(this.formData[step_list[i]]);
     }
-    // alert(this.image.name + JSON.stringify(this.setting));
+    // alert(this.image.name + JSON.stringify(data));
     this._computeAugmentationByServer(data);
   }
 
