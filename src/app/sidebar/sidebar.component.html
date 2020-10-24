@@ -1,26 +1,48 @@
 <mat-drawer-container class="sidebar-container">
   <kornia-icon-side-bar class="icon-sidebar-container" [defaultItem]="augmentationListName" (itemChanged)="onItemChanged($event)"></kornia-icon-side-bar>
   <div class="expand-sidebar-container" *ngIf="!hidden">
-    <div style="flex-grow: 1;">
+    <div style="flex-grow: 1; display: flex; flex-direction: column;">
       <div style="display: flex; justify-content: space-between;">
         <div></div>
         <div style="padding: 1px 5px;">
           <mat-icon aria-hidden="false" matTooltip="Show code" (click)="onGetCode(); $event.stopPropagation();">code</mat-icon>
+          <!-- Implement ONNX later -->
           <mat-icon aria-hidden="false" matTooltip="Export ONNX model" style="display: none;"
               (click)="onGetModel(); $event.stopPropagation();">get_app</mat-icon>
         </div>
       </div>
-      <kornia-augmentation-list
-        style="overflow: hidden; display: block;"
-        [listName]="augmentationListName"
-        [style.height]="isDisplayingCode ? '1px' : 'auto'"
-        [style.visibility]="isDisplayingCode ? 'hidden' : 'visible'"></kornia-augmentation-list>
-      <div
-        style="overflow: hidden; display: block;"
-        [style.height]="isDisplayingCode ? 'auto' : '1px'"
-        [style.visibility]="isDisplayingCode ? 'visible' : 'hidden'"
-        class="coding-block">
-        {{ codes }}
+      <div style="display: flex; flex-direction: column; justify-content: space-between; flex-grow: 1; width: 400px;">
+        <div *ngIf="!isDisplayingCode" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+          <kornia-augmentation-list
+            (augmentationChanged)="onAugmentationChanged($event)"
+            [augmentationData]="augmentationList"></kornia-augmentation-list>
+          <div style="display: flex; justify-content: space-between; padding: 15px; border-top: 1px solid #555;">
+            <div style="display: flex; justify-content: center; align-items: center;">
+              <!-- Disable this for now -->
+              <div style="visibility: hidden;">
+                <mat-slide-toggle color="primary" [(ngModel)]="isDebugMode"></mat-slide-toggle>
+                <span>Debug Mode</span>
+              </div>
+              <!-- Disable above -->
+            </div>
+            <ng-container *ngIf="!isDebugMode">
+              <button mat-fab color="primary" (click)="runAll()">
+                <mat-icon>play_arrow</mat-icon>
+              </button>
+            </ng-container>
+            <div *ngIf="isDebugMode">
+              <button mat-fab color="primary" (click)="runOneStep()">
+                <mat-icon>skip_next</mat-icon>
+              </button>
+              <button mat-fab color="primary" (click)="clearSteps()">
+                <mat-icon>refresh</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="isDisplayingCode" class="coding-block">
+          {{ codes }}
+        </div>
       </div>
     </div>
   </div>

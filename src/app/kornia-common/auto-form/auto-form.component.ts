@@ -47,7 +47,6 @@ export class AutoFormComponent implements OnInit {
     this.selectedAugmentation = event.value;
     this.augmentationSelected.emit(event.value);
     this.augmentationStatusService.getAugmentationFieldData(event.value).subscribe(([model, fields]) => {
-      console.log(model)
       this.model = model;
       this.fields_left = this.mapFields(fields, 'left');
       this.fields_right = this.mapFields(fields, 'right');
@@ -57,7 +56,6 @@ export class AutoFormComponent implements OnInit {
 
   submit() {
     if (this.form_left.valid && this.form_right.valid) {
-      console.log(this.model)
       this.formUpdated.emit(Object.assign({}, this.model));
     }
   }

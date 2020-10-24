@@ -52,6 +52,10 @@ export class AugmentationService {
   }
 
   getAugmentationCode() {
+    if (this._image == undefined || this._formData == undefined) {
+      alert("Image or augmentation setting is not defined")
+      return
+    }
     const formData = new FormData();
     formData.append('file', null); 
     formData.append('setting', JSON.stringify(this._formData)); 
