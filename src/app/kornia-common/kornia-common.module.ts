@@ -9,11 +9,13 @@ import { FormlyMaterialModule } from '@ngx-formly/material';
 import { HeaderComponent } from './header/header.component';
 import { AutoFormComponent } from './auto-form/auto-form.component';
 import { AugmentationStatusService } from '../data/augmentation-status.service';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
     HeaderComponent,
-    AutoFormComponent
+    AutoFormComponent,
+    FooterComponent
   ],
   imports: [
     CommonModule,
@@ -32,7 +34,8 @@ import { AugmentationStatusService } from '../data/augmentation-status.service';
   ],
   exports: [
     HeaderComponent,
-    AutoFormComponent
+    AutoFormComponent,
+    FooterComponent
   ]
 })
 export class KorniaCommonModule { }

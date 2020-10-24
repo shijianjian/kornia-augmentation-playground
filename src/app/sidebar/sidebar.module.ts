@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 
-import { MatIconModule, MatSidenavModule, MatTooltipModule } from '@angular/material';
+import { MatIconModule, MatSidenavModule, MatTooltipModule, MatToolbarModule } from '@angular/material';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 
 import { AugmentationListModule } from './augmentation-list/augmentation-list.module';
@@ -20,6 +20,7 @@ import { AugmentationService } from '../augmentation.service';
     MatIconModule,
     MatSidenavModule,
     MatTooltipModule,
+    MatToolbarModule,
     AugmentationListModule,
   ],
   providers: [
