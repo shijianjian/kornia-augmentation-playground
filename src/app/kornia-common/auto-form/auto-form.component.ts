@@ -16,9 +16,12 @@ export class AutoFormComponent implements OnInit {
   @Output() formUpdated = new EventEmitter<object>();
 
   form: FormGroup;
+  form_left: FormGroup;
+  form_right: FormGroup;
   options: FormlyFormOptions = {};
   model: any;
-  fields: FormlyFieldConfig[];
+  fields_left: FormlyFieldConfig[];
+  fields_right: FormlyFieldConfig[];
 
   selectedAugmentation: string;
   selectionList: [];
@@ -26,6 +29,8 @@ export class AutoFormComponent implements OnInit {
   constructor(private augmentationStatusService: AugmentationStatusService) {
     this.augmentationStatusService.getAugmentationList().subscribe(selectionList => {
       this.form = new FormGroup({augmentation: new FormControl('')});
+      this.form_left = new FormGroup({});
+      this.form_right = new FormGroup({});
       this.selectionList = selectionList;
     });
   }
@@ -42,14 +47,17 @@ export class AutoFormComponent implements OnInit {
     this.selectedAugmentation = event.value;
     this.augmentationSelected.emit(event.value);
     this.augmentationStatusService.getAugmentationFieldData(event.value).subscribe(([model, fields]) => {
+      console.log(model)
       this.model = model;
-      this.fields = this.mapFields(fields);
+      this.fields_left = this.mapFields(fields, 'left');
+      this.fields_right = this.mapFields(fields, 'right');
       this.submit();
     });
   }
 
   submit() {
-    if (this.form.valid) {
+    if (this.form_left.valid && this.form_right.valid) {
+      console.log(this.model)
       this.formUpdated.emit(Object.assign({}, this.model));
     }
   }
@@ -57,9 +65,13 @@ export class AutoFormComponent implements OnInit {
   /**
    * Adjust the JSON fields loaded from the server.
    */
-  mapFields(fields: FormlyFieldConfig[]) {
-    return fields.map(f => {
-      return f;
+  mapFields(fields: FormlyFieldConfig[], position: string) {
+    return fields.filter((v, i)  => {
+      if (position == 'left') {
+        return i % 2 == 0;
+      } else {
+        return (i + 1) % 2 == 0;
+      }
     });
   }
 }

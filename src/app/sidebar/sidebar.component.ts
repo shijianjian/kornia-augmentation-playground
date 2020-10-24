@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { AugmentationService } from '../augmentation.service';
 
 @Component({
@@ -8,9 +8,13 @@ import { AugmentationService } from '../augmentation.service';
 })
 export class SidebarComponent implements OnInit, OnDestroy {
 
+  @Input() hidden;
+
   codes = "";
   codes_sub;
   isDisplayingCode = false;
+
+  augmentationListName = '2D';
 
   constructor(private augmentationService: AugmentationService) {
   }
@@ -32,6 +36,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   onGetModel() {
 
+  }
+
+  onItemChanged(event) {
+    this.augmentationListName = event;
   }
 
 }

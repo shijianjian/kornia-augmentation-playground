@@ -42,97 +42,33 @@ export class AugmentationStatusService {
         p: 0.5, brightness: 0.5, contrast: 0.5, saturation: 0.5, hue: 0.3
       });
     }
-    if (name == "RandomAffine") {
-      return of({p: 0.5});
-    }
-    return of({
-      "firstName": "Joan",
-      "lastName": "of Arc"
-    })
+    return of({p: 0.5});
   }
 
   getFields(name: string): Observable<any> {
     // return this.http.get<FormlyFieldConfig[]>('assets/json-powered/user-form_json');
     if ((name == "RandomHorizontalFlip") || (name == "RandomVerticalFlip")) {
-      return of([this.getCommonFields("p")]);
+      return of([this.getCommonFields("p", "Probablities of applying the augmentation")]);
     }
     if (name == "ColorJitter") {
       return of([
-        this.getCommonFields("brightness"),
-        this.getCommonFields("contrast"),
-        this.getCommonFields("saturation"),
-        this.getCommonFields("hue"),
-        this.getCommonFields("p"),
+        this.getCommonFields("brightness", "Brightness range"),
+        this.getCommonFields("contrast", "Contrast range"),
+        this.getCommonFields("saturation", "Saturation range"),
+        this.getCommonFields("hue", "Hue range"),
+        this.getCommonFields("p", "Probablities of applying the augmentation"),
       ]);
     }
-    if (name == "RandomAffine") {
-      return of([this.getCommonFields("p")]);
+    return of([this.getCommonFields("p", "This function has not been added yet.")]);
     }
-    return of([
-      {
-        "key": "firstName",
-        "type": "input",
-        "templateOptions": {
-          "label": "First Name"
-        }
-      },
-      {
-        "key": "lastName",
-        "type": "input",
-        "templateOptions": {
-          "label": "Last Name"
-        }
-      },
-      {
-        "key": "mac",
-        "type": "input",
-        "templateOptions": {
-          "label": "Mac Address",
-          "pattern": "([0-9A-F]{2}[:-]){5}([0-9A-F]{2})"
-        }
-      },
-      {
-        "key": "color",
-        "type": "radio",
-        "templateOptions": {
-          "label": "Color Preference (try this out)",
-          "options": [
-            {
-              "label": "No Preference",
-              "value": null
-            },
-            {
-              "label": "Green",
-              "value": "green"
-            },
-            {
-              "label": "Blue",
-              "value": "blue"
-            }
-          ]
-        }
-      },
-      {
-        "key": "reason",
-        "type": "textarea",
-        "templateOptions": {
-          "label": "Why?"
-        },
-        "expressionProperties": {
-          "templateOptions.label": "'Why did you choose ' + model.color + '?'"
-        },
-        "hideExpression": "!model.color"
-      }
-    ])
-  }
 
-  getCommonFields(key) {
+  getCommonFields(key, label) {
     return {
       key: key,
       type: "input",
       templateOptions: {
         type: "number",
-        label: "Probablities of applying the augmentation",
+        label: label,
         pattern: "^(0(\.[0-9]{1,4})?|1(\.0{1,4})?)$"
       },
       validation: {

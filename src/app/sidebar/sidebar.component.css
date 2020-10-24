@@ -1,8 +1,23 @@
-.example-container {
-  width: 550px;
+.sidebar-container {
+  max-width: 550px;
   height: 100%;
   border: 1px solid #555;
   margin: 0;
+}
+
+::ng-deep .mat-drawer-content {
+  display: flex !important;
+}
+
+.icon-sidebar-container {
+  flex-grow: 1;
+  min-width: 64px;
+  height: 100%;
+  border-right: 1px solid #555;
+}
+
+.expand-sidebar-container {
+  position: relative;
   display: flex;
   flex-direction: column;
 }

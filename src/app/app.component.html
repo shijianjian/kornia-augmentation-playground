@@ -1,7 +1,15 @@
 <div style="display: flex; height: 100%; flex-direction: column;">
-    <kornia-header></kornia-header>
-    <kornia-sidebar style="flex-grow: 1;"></kornia-sidebar>
+    <kornia-header [shrink]='hidden'></kornia-header>
+    <kornia-sidebar style="flex-grow: 1;" [hidden]='hidden'></kornia-sidebar>
     <kornia-footer></kornia-footer>
+    <mat-toolbar style="display: flex; justify-content: space-between; border-top: 1px solid #555; height: 32px;">
+        <div style="height: 100%; display: flex;">
+        </div>
+        <div (click)="onHidden();$event.stopPropagation();">
+            <mat-icon *ngIf="hidden" aria-hidden="false">keyboard_arrow_right</mat-icon>
+            <mat-icon *ngIf="!hidden" aria-hidden="false">keyboard_arrow_left</mat-icon>
+        </div>
+    </mat-toolbar>
 </div>
 
 <kornia-playground style="flex-grow: 1; max-height: 40%;"></kornia-playground>

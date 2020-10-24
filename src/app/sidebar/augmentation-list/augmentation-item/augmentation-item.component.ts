@@ -9,8 +9,11 @@ export class AugmentationItemComponent {
 
   @Input() item: object;
   @Output() formUpdated = new EventEmitter<object>();
+  @Output() formDeleted = new EventEmitter<object>();
 
   fields;
+  panel_opened = false;
+  show_details = true;
 
   constructor() {
   }
@@ -20,6 +23,16 @@ export class AugmentationItemComponent {
     this.fields['name'] = this.item['name'];
     this.fields['kwargs'] = fields;
     this.formUpdated.emit(this.fields);
+  }
+
+  onOpened() { this.panel_opened = true; }
+  onClosed() { this.panel_opened = false; }
+
+  onRemove() {
+    let toRemove = confirm("Are you sure to remove the augmenation?")
+    if (toRemove) {
+      this.formDeleted.emit({"value": toRemove});
+    }
   }
 
 }

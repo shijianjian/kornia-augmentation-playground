@@ -11,8 +11,8 @@
   </mat-form-field>
 </form> -->
 
-<form [formGroup]="form" (ngSubmit)="submit()">
-  <div style="display: flex; justify-content: space-between;">
+<form [formGroup]="form">
+  <div style="margin-bottom: 10px;">
     <mat-form-field appearance="fill">
       <mat-label>Augmentation</mat-label>
       <mat-select (selectionChange)="onSelectionChange($event);" formControlName="augmentation">
@@ -21,10 +21,12 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <div *ngIf="selectedAugmentation" style="flex-grow: 0.8;">
-      <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form"></formly-form>
-      <button mat-button color="primary" [disabled]="!form.valid">Confirm</button>
-      <!-- <button type="submit" class="btn btn-primary submit-button" [disabled]="!form.valid">Confirm</button> -->
+  </div>
+  <div *ngIf="selectedAugmentation" style="display: block;">
+    <div style="display: flex; justify-content: space-between; min-width: 300px;">
+      <formly-form [model]="model" [fields]="fields_left" [form]="form_left" (modelChange)="submit()"></formly-form>
+      <div style="height: 100%; padding: 3px;"></div>
+      <formly-form [model]="model" [fields]="fields_right" [form]="form_right" (modelChange)="submit()"></formly-form>
     </div>
   </div>
 </form>

@@ -1,0 +1,5 @@
+<mat-radio-group class="icon-radio-group" [value]="defaultItem" (change)="onRadioChanged($event)">
+  <mat-radio-button *ngFor="let item of allItems" [value]="item" disableRipple="true">
+    {{item}}
+  </mat-radio-button>
+</mat-radio-group>

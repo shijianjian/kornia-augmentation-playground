@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { AugmentationService } from 'src/app/augmentation.service';
 
@@ -7,7 +7,7 @@ import { AugmentationService } from 'src/app/augmentation.service';
   templateUrl: './augmentation-list.component.html',
   styleUrls: ['./augmentation-list.component.css']
 })
-export class AugmentationListComponent implements OnInit {
+export class AugmentationListComponent {
 
   isDebugMode = false;
 
@@ -15,12 +15,34 @@ export class AugmentationListComponent implements OnInit {
   new_ele = 0
   current_step = 0
 
-  augmentationList = [
+  augmentationList: object[];
+
+  private _listName: string;
+  private augmentationList2D = [
     {name: 'RandomHorizontalFlip', number: this.new_ele},
     {name: 'RandomVerticalFlip', number: 0},
     {name: 'ColorJitter', number: 0},
     // {name: 'RandomAffine', number: 0},
   ];
+  private augmentationList3D = [
+    // {name: 'ColorJitter', number: 0},
+  ]
+
+  @Input() set listName(value: string) {
+    this.formData = [];
+    if (value == '2D') {
+      this.augmentationList = this.augmentationList2D;
+    } else if (value == '3D') {
+      this.augmentationList = this.augmentationList3D;
+    } else {
+      console.error(`${value} is not implemented.`)
+    }
+    this._listName = value;
+  }
+  get listName(): string {
+      return this._listName;
+  }
+
 
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.augmentationList, event.previousIndex, event.currentIndex);
@@ -38,14 +60,26 @@ export class AugmentationListComponent implements OnInit {
     } else {
       this.formData.push(data);
     }
-    this.augmentationService.formData = this.formData
+    this.onAugmentationListUpdated();
+  }
+
+  onFormDeleted(event, idx: number) {
+    if (event['value']) {
+      this.augmentationList.splice(idx, 1);
+      this.formData.splice(idx, 1);
+      this.onAugmentationListUpdated();
+    }
+  }
+
+  onAugmentationListUpdated() {
+    this.augmentationService.formData = this.formData;
   }
 
   updateFormDataIndex(previousIndex: number, currentIndex: number) {
     let element = this.formData[previousIndex];
     this.formData.splice(previousIndex, 1);
     this.formData.splice(currentIndex, 0, element);
-    this.augmentationService.formData = this.formData
+    this.onAugmentationListUpdated();
   }
 
   runOneStep() {
@@ -71,9 +105,4 @@ export class AugmentationListComponent implements OnInit {
   }
 
   constructor(private augmentationService: AugmentationService) { }
-
-  ngOnInit() {
-    this.augmentationService.formData = this.formData
-  }
-
 }

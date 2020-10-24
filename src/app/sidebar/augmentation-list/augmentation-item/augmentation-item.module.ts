@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { MatButtonModule } from '@angular/material';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -18,6 +19,7 @@ import { AugmentationItemComponent } from './augmentation-item.component';
     MatExpansionModule,
     MatFormFieldModule,
     MatIconModule,
+    MatButtonModule,
     KorniaCommonModule
   ],
   exports: [

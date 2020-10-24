@@ -1,4 +1,6 @@
-<mat-drawer-container class="example-container">
+<mat-drawer-container class="sidebar-container">
+  <kornia-icon-side-bar class="icon-sidebar-container" [defaultItem]="augmentationListName" (itemChanged)="onItemChanged($event)"></kornia-icon-side-bar>
+  <div class="expand-sidebar-container" *ngIf="!hidden">
     <div style="flex-grow: 1;">
       <div style="display: flex; justify-content: space-between;">
         <div></div>
@@ -8,9 +10,18 @@
               (click)="onGetModel(); $event.stopPropagation();">get_app</mat-icon>
         </div>
       </div>
-      <kornia-augmentation-list [style.display]="isDisplayingCode ? 'none' : 'block'"></kornia-augmentation-list>
-      <div [style.display]="isDisplayingCode ? 'block' : 'none'" class="coding-block">
+      <kornia-augmentation-list
+        style="overflow: hidden; display: block;"
+        [listName]="augmentationListName"
+        [style.height]="isDisplayingCode ? '1px' : 'auto'"
+        [style.visibility]="isDisplayingCode ? 'hidden' : 'visible'"></kornia-augmentation-list>
+      <div
+        style="overflow: hidden; display: block;"
+        [style.height]="isDisplayingCode ? 'auto' : '1px'"
+        [style.visibility]="isDisplayingCode ? 'visible' : 'hidden'"
+        class="coding-block">
         {{ codes }}
       </div>
     </div>
+  </div>
 </mat-drawer-container>

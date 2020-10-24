@@ -1,3 +1,7 @@
+:host {
+    display: flex;
+}
+
 mat-expansion-panel-header {
     height: auto !important;
 }

@@ -8,6 +8,7 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 import { AugmentationListModule } from './augmentation-list/augmentation-list.module';
 import { SidebarComponent } from './sidebar.component';
 import { AugmentationService } from '../augmentation.service';
+import { IconSideBarModule } from './icon-side-bar/icon-side-bar.module';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { AugmentationService } from '../augmentation.service';
     MatTooltipModule,
     MatToolbarModule,
     AugmentationListModule,
+    IconSideBarModule,
   ],
   providers: [
     AugmentationService

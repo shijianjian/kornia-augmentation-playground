@@ -1,7 +1,4 @@
-.example-list {
-    width: 50em;
-    max-width: 100%;
-    min-height: 60px;
+.augmentation-list {
     display: block;
     background: none;
     border-radius: 4px;
@@ -9,7 +6,7 @@
     margin: auto;
 }
 
-.example-box {
+.augmentation-box {
     border-bottom: solid 1px #ccc;
     color: rgba(0, 0, 0, 0.87);
     display: flex;

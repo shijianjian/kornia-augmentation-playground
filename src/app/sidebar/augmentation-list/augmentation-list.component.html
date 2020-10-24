@@ -1,9 +1,10 @@
-<div cdkDropList #mylist class="example-list" (cdkDropListDropped)="drop($event)">
+<div cdkDropList #mylist class="augmentation-list" (cdkDropListDropped)="drop($event)">
   <kornia-augmentation-item
-    class="example-box"
+    class="augmentation-box"
     *ngFor="let item of augmentationList; let i = index;"
     cdkDrag
     (formUpdated)="onFormUpdated($event, i)"
+    (formDeleted)="onFormDeleted($event, i)"
     [item]="item"></kornia-augmentation-item>
   <div style="display: flex; justify-content: space-between; margin: auto; padding: 15px;">
     <div style="display: flex; justify-content: center; align-items: center;">
