@@ -22,7 +22,7 @@
   flex-direction: column;
 }
 
-mat-icon:hover {
+.clickable-icon:hover {
   cursor: pointer;
 }
 
@@ -32,4 +32,19 @@ mat-icon:hover {
   padding: 10px;
   border: 2px dotted #555;
   border-radius: 10px;
+}
+
+.augmentation-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+.augmentation-list-container {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
 }

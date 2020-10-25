@@ -10,25 +10,19 @@ export class AugmentationService {
 
   constructor(private http: HttpClient) {}
 
-  private _image: File;
-  public get image() { return this._image; }
-  public set image(val) { this._image = val; }
-
-  private _formData;
-  public get formData() { return this._formData; }
-  public set formData(val) { this._formData = val; }
-
-  results = new BehaviorSubject<object>({images: [], params: []})
-  codes = new BehaviorSubject<object>({code: ''})
+  results = new BehaviorSubject<object>({images: [], params: []});
+  codes = new BehaviorSubject<object>({code: ''});
+  image = new BehaviorSubject<Blob>(undefined);
+  formData = new BehaviorSubject<object[]>([]);
 
   computeAugmentation(step_list) {
-    if (this._image == undefined || this._formData == undefined) {
+    if (this.image.getValue() == undefined || this.formData.getValue() == undefined) {
       alert("Image or augmentation setting is not defined")
       return
     }
     let data = []
     for (let i=0; i < step_list.length; i ++) {
-      data.push(this.formData[step_list[i]]);
+      data.push(this.formData.getValue()[step_list[i]]);
     }
     // alert(this.image.name + JSON.stringify(data));
     this._computeAugmentationByServer(data);
@@ -36,10 +30,10 @@ export class AugmentationService {
 
   private _computeAugmentationByServer(data) {
     var fileReader = new FileReader();
-    fileReader.readAsDataURL(this._image)
+    fileReader.readAsDataURL(this.image.getValue())
     fileReader.onload = () => {
         const formData = new FormData();  
-        formData.append('file', this.image); 
+        formData.append('file', this.image.getValue()); 
         formData.append('setting', JSON.stringify(data)); 
         this.http.post("http://localhost:7000/augmentation/compute", formData).subscribe(data => {
           this.results.next(data);
@@ -52,13 +46,13 @@ export class AugmentationService {
   }
 
   getAugmentationCode() {
-    if (this._image == undefined || this._formData == undefined) {
+    if (this.image.getValue() == undefined || this.formData.getValue() == undefined) {
       alert("Image or augmentation setting is not defined")
       return
     }
     const formData = new FormData();
     formData.append('file', null); 
-    formData.append('setting', JSON.stringify(this._formData)); 
+    formData.append('setting', JSON.stringify(this.formData.getValue())); 
     this.http.post("http://localhost:7000/augmentation/getcode", formData).subscribe(data => {
       console.log(data['code'])
       this.codes.next(data);

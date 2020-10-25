@@ -12,6 +12,9 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   codes = "";
   codes_sub;
+  image;
+  image_sub;
+
   current_step = 0
   isDisplayingCode = false;
   augmentationType: string = '2D';
@@ -25,18 +28,19 @@ export class SidebarComponent implements OnInit, OnDestroy {
   ];
   private augmentationList3D = []
 
-  constructor(private augmentationService: AugmentationService) {
-  }
+  constructor(
+    private augmentationService: AugmentationService
+  ) { }
 
   ngOnInit() {
     this.augmentationList = this.augmentationList2D;
-    this.codes_sub = this.augmentationService.codes.subscribe(data => {
-      this.codes = data['code'];
-    });
+    this.codes_sub = this.augmentationService.codes.subscribe(data => this.codes = data['code']);
+    this.image_sub = this.augmentationService.image.subscribe(img => this.image = img);
   }
 
   ngOnDestroy() {
-    this.codes_sub.unsubscribe()
+    this.codes_sub.unsubscribe();
+    this.image_sub.unsubscribe();
   }
 
   onGetCode() {
@@ -70,7 +74,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     } else {
       console.error(`${this.augmentationType} is not implemented.`)
     }
-    this.augmentationService.formData = this.augmentationData;
+    this.augmentationService.formData.next(this.augmentationData);
   }
 
   runOneStep() {

@@ -11,6 +11,7 @@ import { AugmentationListModule } from './augmentation-list/augmentation-list.mo
 import { SidebarComponent } from './sidebar.component';
 import { AugmentationService } from '../augmentation.service';
 import { IconSideBarModule } from './icon-side-bar/icon-side-bar.module';
+import { ImageUploaderModule } from './image-uploader/image-uploader.module';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { IconSideBarModule } from './icon-side-bar/icon-side-bar.module';
     MatSlideToggleModule,
     AugmentationListModule,
     IconSideBarModule,
+    ImageUploaderModule
   ],
   providers: [
     AugmentationService
