@@ -1,0 +1,17 @@
+<div>
+<ngx-dropzone (change)="onSelect($event)" style="position: relative;">
+  <ngx-dropzone-label *ngIf="!imgURL">{{title}}</ngx-dropzone-label>
+
+  <ng-container *ngIf="imgURL">
+    <div class="ngx-dropzone-preview">
+      <img [src]="imgURL" style="width: 100%;">
+    </div>
+    <div class="ngx-dropzone-mask">
+      <div class="image-text">Click to upload an image</div>
+      <div class="delete-btn">
+        <mat-icon (click)="onRemove($event); $event.stopPropagation()">delete</mat-icon>
+      </div>
+    </div>
+  </ng-container>
+</ngx-dropzone>
+</div>

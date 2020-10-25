@@ -1,0 +1,10 @@
+:host {
+    display: block;
+    background-color: #212121;
+}
+
+.image-mask:hover {
+    opacity: 0.9;
+    background-color: rgba(0, 0, 0, 0.9);
+    cursor: pointer;
+}

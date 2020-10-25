@@ -1,3 +1,24 @@
 :host {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+kornia-results-viewer {
+    flex-grow: 1;
+}
+
+kornia-results-thumbnail {
+    width: 100%;
+}
+
+.expansion-panel {
+    background-color: #212121;
+    color: white;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.clickable-icon:hover {
+    cursor: pointer;
 }
