@@ -5,8 +5,16 @@ Demo app for experimenting data augmentations. For each setting, it would genera
 ![-](./misc/demo.gif)
 
 ## How to run
+### Local build
 ```bash
 $ sh deploy.sh
+$ cd dist
+$ gunicorn -w 4 -b 127.0.0.1:7000 index:app
+```
+
+### Docker
+```bash
+$ docker build -t kornia-app:v0.3 .
 ```
 
 ## Development
