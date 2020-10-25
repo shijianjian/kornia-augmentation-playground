@@ -1,5 +1,5 @@
 <mat-drawer-container class="sidebar-container">
-  <kornia-icon-side-bar class="icon-sidebar-container" [defaultItem]="augmentationListName" (itemChanged)="onItemChanged($event)"></kornia-icon-side-bar>
+  <kornia-icon-side-bar class="icon-sidebar-container" [defaultItem]="augmentationType" (itemChanged)="onItemChanged($event)"></kornia-icon-side-bar>
   <div class="expand-sidebar-container" *ngIf="!hidden">
     <div style="flex-grow: 1; display: flex; flex-direction: column; width: 400px;">
       <div style="display: flex; justify-content: space-between; padding-top: 3px;">

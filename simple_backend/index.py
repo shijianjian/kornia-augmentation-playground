@@ -17,9 +17,9 @@ app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
 CORS(app)
 
 
-@app.route("/")
-def helloWorld():
-    return "Hello, cross-origin-world!"
+@app.route('/', methods=['GET'])
+def root():
+    return app.send_static_file('index.html')
 
 
 @app.route('/augmentation/compute', methods=['POST'])

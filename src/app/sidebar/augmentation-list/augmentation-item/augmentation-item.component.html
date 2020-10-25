@@ -11,8 +11,8 @@
 
     <kornia-auto-form
       style="padding-top: 10px;"
-      [defaultAugmentation]="item.name"
-      (augmentationSelected)="item.name = $event"
+      [defaultAugmentation]="item['name']"
+      (augmentationSelected)="item['name'] = $event"
       (formUpdated)="onFormUpdated($event);"></kornia-auto-form>
     <button style="float: right;" mat-button color="warn" (click)="onRemove(); $event.stopPropagation();">Remove</button>
   </mat-expansion-panel>

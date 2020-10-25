@@ -4,3 +4,6 @@ scikit-image
 numpy
 pillow
 kornia == 0.4.1
+
+# Deployment
+gunicorn

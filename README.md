@@ -4,13 +4,19 @@ Demo app for experimenting data augmentations. For each setting, it would genera
 
 ![-](./misc/demo.gif)
 
-## Frontend Running
+## How to run
+```bash
+$ sh deploy.sh
+```
+
+## Development
+### Frontend Running
 ```bash
 $ npm install
 $ ng serve
 ```
 
-## Backend Running
+### Backend Running
 In another terminal:
 ```bash
 $ cd simple_backend
