@@ -10,7 +10,14 @@ export class ResultsViewerComponent {
 
   @Input() images;
   @Input() params;
+  @Input() index;
+
+  showPipeline = false;
 
   constructor() { }
+
+  onCheckPipeline() {
+    this.showPipeline = !this.showPipeline;
+  }
 
 }

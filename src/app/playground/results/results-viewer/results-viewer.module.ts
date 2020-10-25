@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ResultsViewerComponent } from './results-viewer.component';
+import { MatButtonModule, MatCardModule, MatIconModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -8,6 +9,9 @@ import { ResultsViewerComponent } from './results-viewer.component';
   ],
   imports: [
     CommonModule,
+    MatCardModule,
+    MatIconModule,
+    MatButtonModule
   ],
   exports: [
     ResultsViewerComponent

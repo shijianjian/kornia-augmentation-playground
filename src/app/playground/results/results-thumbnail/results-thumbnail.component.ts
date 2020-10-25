@@ -14,6 +14,6 @@ export class ResultsThumbnailComponent {
   constructor() { }
 
   onClickImage(i) {
-    this.imageClicked.emit(i + 1);
+    this.imageClicked.emit(i);
   }
 }

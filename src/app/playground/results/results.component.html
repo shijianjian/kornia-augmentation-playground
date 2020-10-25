@@ -1,11 +1,15 @@
-<kornia-results-viewer [images]="images" [params]="params"></kornia-results-viewer>
-<div>
-    <div class="expansion-panel" *ngIf="images?.length > 0" style="width: 100%; text-align: center;">
+<kornia-results-viewer
+    class="viewer-panel"
+    [images]="images"
+    [params]="params"
+    [index]="imageSelected"></kornia-results-viewer>
+<div class="expansion-panel">
+    <div *ngIf="images?.length > 0" style="width: 100%; text-align: center;">
         <div class="clickable-icon" style="width: 100%; text-align: center;" (click)="onWrapping(); $event.stopPropagation();">
             <mat-icon *ngIf="!wrap" style="display: block; margin: auto;">expand_less</mat-icon>
             <mat-icon *ngIf="wrap" style="display: block; margin: auto;">expand_more</mat-icon>
         </div>
-        <div *ngIf="imageSelected != undefined">{{imageSelected}} / {{images.length}}</div>
+        <div *ngIf="imageSelected != undefined">{{imageSelected + 1}} / {{images.length}}</div>
     </div>
     <kornia-results-thumbnail
         (imageClicked)="onImageClicked($event)"

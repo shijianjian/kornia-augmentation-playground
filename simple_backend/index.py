@@ -71,17 +71,20 @@ def decode_array_list(array):
 def read_dict_params(params, num=8):
 	dic = {}
 	for aug_name, aug_value in params.items():
+		to_apply = aug_value['batch_prob']
 		for key, value in aug_value.items():
-			if len(value) != num:
-				value = [value] * 8
-			for idx, v in enumerate(value):
+			if len(value) != np.array(to_apply).sum() and key != 'batch_prob':
+				value = [value] * np.array(to_apply).sum()
+			value = iter(value)
+			for idx, if_to in enumerate(to_apply):
 				if idx not in dic:
 					dic.update({idx: {}})
 				dic2 = dic[idx]
 				if aug_name not in dic2:
 					dic2.update({aug_name: {}})
 				dic3 = dic2[aug_name]
-				dic3.update({key: v})
+				if key == 'batch_prob' or if_to:
+					dic3.update({key: next(value)})
 				dic2.update({aug_name: dic3})
 				dic.update({idx: dic2})
 	return dic

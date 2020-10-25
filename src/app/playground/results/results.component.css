@@ -1,22 +1,22 @@
 :host {
     display: flex;
     flex-direction: column;
+    background-color: rgba(200, 200, 200, 0.3);
     height: 100%;
 }
 
-kornia-results-viewer {
-    flex-grow: 1;
-}
-
-kornia-results-thumbnail {
-    width: 100%;
-}
-
 .expansion-panel {
+    display: block;
+    width: 100%;
     background-color: #212121;
     color: white;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+}
+
+.viewer-panel {
+    flex: auto;
+    overflow: auto;
 }
 
 .clickable-icon:hover {
