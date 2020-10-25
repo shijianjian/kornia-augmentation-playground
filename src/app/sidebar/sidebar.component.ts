@@ -83,6 +83,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
       this.clearSteps();
       return
     }
+    this.augmentationService.clearCurrentResults();
     this.augmentationService.computeAugmentation(this.current_step);
     this.current_step += 1;
   }
@@ -92,6 +93,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     for (let i = this.current_step; i < this.augmentationData.length; i ++) {
       theRestIdx.push(i);
     }
+    this.augmentationService.clearCurrentResults();
     this.augmentationService.computeAugmentation(theRestIdx);
   }
 

@@ -21,6 +21,7 @@ export class ResultsComponent implements OnInit {
     this.augmentationServiceSub = this.augmentationService.results.subscribe(res => {
       this.images = res['images'];
       this.params = res['params'];
+      this.imageSelected = undefined;
       console.log(this.params[0])
     });
   }

@@ -73,7 +73,8 @@ def read_dict_params(params, num=8):
 	for aug_name, aug_value in params.items():
 		to_apply = aug_value['batch_prob']
 		for key, value in aug_value.items():
-			if len(value) != np.array(to_apply).sum() and key != 'batch_prob':
+			# Special case
+			if aug_name == 'ColorJitter' and key == 'order' and key != 'batch_prob':
 				value = [value] * np.array(to_apply).sum()
 			value = iter(value)
 			for idx, if_to in enumerate(to_apply):

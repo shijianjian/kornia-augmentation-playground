@@ -59,4 +59,8 @@ export class AugmentationService {
     });
   }
 
+
+  clearCurrentResults() {
+    this.results.next({images: [], params: []});
+  }
 }

@@ -27,11 +27,9 @@
 }
 
 .coding-block {
-  background-color: #555;
   white-space: pre-wrap;
   padding: 10px;
   border: 2px dotted #555;
-  border-radius: 10px;
 }
 
 .augmentation-container {
