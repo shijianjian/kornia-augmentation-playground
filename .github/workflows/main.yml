@@ -15,3 +15,6 @@ jobs:
           heroku_api_key: "a0b97bdd-51c8-48fe-a845-e53c7e2bcd45"
           heroku_app_name: "kornia-augmentation-playground"
           heroku_email: "sj8716643@gmail.com"
+          usedocker: true
+          # healthcheck: "https://kornia-augmentation-playground.herokuapp.com/health"
+          # rollbackonhealthcheckfailed: true

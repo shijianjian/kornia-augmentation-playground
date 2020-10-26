@@ -1,3 +1,7 @@
+# Due to the mem issues, install cpu version.
+--find-links https://download.pytorch.org/whl/torch_stable.html
+torch==1.6.0+cpu
+
 flask
 flask_cors
 scikit-image
