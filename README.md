@@ -9,7 +9,7 @@ Demo app for experimenting data augmentations. For each setting, it would genera
 ```bash
 $ sh deploy.sh
 $ cd dist
-$ gunicorn -w 4 -b 127.0.0.1:7000 index:app
+$ gunicorn -w 4 -b 0.0.0.0:7000 index:app
 ```
 
 ### Docker

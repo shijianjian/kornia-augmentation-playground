@@ -15,4 +15,4 @@ RUN pip install -r kornia-augmentation-backend/requirements.txt
 EXPOSE 7000
 
 WORKDIR /app/dist
-CMD gunicorn -w 4 -b 127.0.0.1:7000 index:app
+CMD gunicorn -w 4 -b 0.0.0.0:7000 index:app
