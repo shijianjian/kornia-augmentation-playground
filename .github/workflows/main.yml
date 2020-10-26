@@ -1,0 +1,17 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - heroku
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.6.8
+        with:
+          heroku_api_key: "a0b97bdd-51c8-48fe-a845-e53c7e2bcd45"
+          heroku_app_name: "kornia-augmentation-playground"
+          heroku_email: "sj8716643@gmail.com"

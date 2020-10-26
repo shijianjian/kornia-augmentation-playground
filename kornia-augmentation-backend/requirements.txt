@@ -3,6 +3,8 @@ flask_cors
 scikit-image
 numpy
 pillow
+--find-links https://download.pytorch.org/whl/torch_stable.html
+torch==1.6.0cpu
 kornia == 0.4.1
 
 # Deployment
