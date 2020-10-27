@@ -1,5 +1,5 @@
 {
-  "name": "sample",
+  "name": "kornia-playground",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -27,7 +27,6 @@
     "core-js": "^2.5.4",
     "ngx-dropzone": "^2.2.2",
     "rxjs": "~6.3.3",
-    "to-regex-range": "^5.0.1",
     "tslib": "^1.9.0",
     "zone.js": "~0.8.26"
   },

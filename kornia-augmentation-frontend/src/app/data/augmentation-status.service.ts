@@ -5,8 +5,6 @@ import { FormlyFieldConfig } from '@ngx-formly/core';
 
 import { object_add_suffix, get_random_id } from "./utils";
 
-const toRegexRange = require('to-regex-range');
-
 @Injectable()
 export class AugmentationStatusService {
   constructor(private http: HttpClient) {}
@@ -38,7 +36,10 @@ export class AugmentationStatusService {
 
   getDefault(name: string, random_id: string): Observable<any>  {
     // return this.http.get<{ firstName: string, lastName: string }>('assets/json-powered/user_json');
-    if ((name == "RandomHorizontalFlip") || (name == "RandomVerticalFlip")) {
+    if (
+      (name == "RandomHorizontalFlip") || (name == "RandomVerticalFlip")
+      || (name == 'RandomGrayscale') || (name == "RandomEqualize")
+    ) {
       return of(object_add_suffix({p: 0.5}, random_id));
     }
     if (name == "ColorJitter") {
@@ -47,16 +48,35 @@ export class AugmentationStatusService {
       }, random_id));
     }
     if (name == "RandomAffine") {
-      return of(object_add_suffix({
-        p: 0.5, degree: 60
-      }, random_id));
+      return of(object_add_suffix({p: 0.5, degrees: 60, shear: 50}, random_id));
+    }
+    if (name == "RandomRotation") {
+      return of(object_add_suffix({p: 0.5, degrees: 60}, random_id));
+    }
+    if (name == "RandomSolarize") {
+      return of(object_add_suffix({p: 0.5, thresholds: 0.1, additions: 0.1}, random_id));
+    }
+    if (name == "RandomPosterize") {
+      return of(object_add_suffix({p: 0.5, bits: 3}, random_id));
+    }
+    if (name == "RandomSharpness") {
+      return of(object_add_suffix({p: 0.5, sharpness: 0.5}, random_id));
+    }
+    if (name == "RandomMotionBlur") {
+      return of(object_add_suffix({p: 0.5, kernel_size: 3, angle: 30, direction: 0.5}, random_id));
+    }
+    if (name == "RandomPerspective") {
+      return of(object_add_suffix({p: 0.5, distortion_scale: 0.5}, random_id));
     }
     return of(object_add_suffix({p: 0.5}, random_id));
   }
 
   getFields(name: string, random_id: string): Observable<any> {
     // return this.http.get<FormlyFieldConfig[]>('assets/json-powered/user-form_json');
-    if ((name == "RandomHorizontalFlip") || (name == "RandomVerticalFlip")) {
+    if (
+      (name == "RandomHorizontalFlip") || (name == "RandomVerticalFlip")
+      || (name == 'RandomGrayscale') || (name == "RandomEqualize")
+    ) {
       return of([this.getCommonFields("p" + random_id, "Probablities of applying the augmentation", 0, 1)]);
     }
     if (name == "ColorJitter") {
@@ -70,10 +90,52 @@ export class AugmentationStatusService {
     }
     if (name == "RandomAffine") {
       return of([
-        this.getCommonFields("degree" + random_id, "Degree range", 0, 360),
+        this.getCommonFields("shear" + random_id, "Shear range", 0, 360),
+        this.getCommonFields("degrees" + random_id, "Degree range", 0, 360),
         this.getCommonFields("p" + random_id, "Probablities of applying the augmentation", 0, 1),
       ]);
     }
+    if (name == "RandomRotation") {
+      return of([
+        this.getCommonFields("degrees" + random_id, "Degree range", 0, 360),
+        this.getCommonFields("degrees" + random_id, "Degree range", 0, 360),
+        this.getCommonFields("p" + random_id, "Probablities of applying the augmentation", 0, 1)
+      ]);
+    }
+    if (name == "RandomSolarize") {
+      return of([
+        this.getCommonFields("thresholds" + random_id, "Thresholds", 0, 1),
+        this.getCommonFields("additions" + random_id, "Additions", 0, 1),
+        this.getCommonFields("p" + random_id, "Probablities of applying the augmentation", 0, 1)
+      ]);
+    }
+    if (name == "RandomPosterize") {
+      return of([
+        this.getCommonFields("bits" + random_id, "bits", 1, 8),
+        this.getCommonFields("p" + random_id, "Probablities of applying the augmentation", 0, 1)
+      ]);
+    }
+    if (name == "RandomSharpness") {
+      return of([
+        this.getCommonFields("sharpness" + random_id, "bits", 0, 1),
+        this.getCommonFields("p" + random_id, "Probablities of applying the augmentation", 0, 1)
+      ]);
+    }
+    if (name == "RandomMotionBlur") {
+      return of([
+        this.getCommonFields("kernel_size" + random_id, "kernel_size", 3, 30),
+        this.getCommonFields("angle" + random_id, "angle", 0, 360),
+        this.getCommonFields("direction" + random_id, "direction", 0, 1),
+        this.getCommonFields("p" + random_id, "Probablities of applying the augmentation", 0, 1)
+      ]);
+    }
+    if (name == "RandomPerspective") {
+      return of([
+        this.getCommonFields("distortion_scale" + random_id, "direction", 0, 1),
+        this.getCommonFields("p" + random_id, "Probablities of applying the augmentation", 0, 1)
+      ]);
+    }
+    alert("This function is not yet supported.")
     return of([this.getCommonFields("p" + random_id, "This function has not been added yet.", 0, 1)]);
     }
 
