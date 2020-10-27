@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, forkJoin, BehaviorSubject } from 'rxjs';
+import { environment } from "src/environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +36,7 @@ export class AugmentationService {
         const formData = new FormData();  
         formData.append('file', this.image.getValue()); 
         formData.append('setting', JSON.stringify(data)); 
-        this.http.post("http://0.0.0.0:7000/augmentation/compute", formData).subscribe(data => {
+        this.http.post(`${environment.apiURL}/augmentation/compute`, formData).subscribe(data => {
           this.results.next(data);
         });
      }
@@ -53,7 +54,7 @@ export class AugmentationService {
     const formData = new FormData();
     formData.append('file', null); 
     formData.append('setting', JSON.stringify(this.formData.getValue())); 
-    this.http.post("http://0.0.0.0:7000/augmentation/getcode", formData).subscribe(data => {
+    this.http.post(`${environment.apiURL}/augmentation/getcode`, formData).subscribe(data => {
       console.log(data['code'])
       this.codes.next(data);
     });

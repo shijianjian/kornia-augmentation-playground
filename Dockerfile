@@ -1,4 +1,4 @@
-FROM nikolaik/python-nodejs:python3.7-nodejs12-slim
+FROM nikolaik/python-nodejs:python3.7-nodejs14
 
 # Install angular dependencies
 RUN yarn global add @angular/cli@1.2.6
@@ -12,7 +12,7 @@ RUN bash deploy.sh
 # Install python dependencies
 RUN pip install -r kornia-augmentation-backend/requirements.txt
 
-EXPOSE 7000
+EXPOSE $PORT
 
 WORKDIR /app/dist
-CMD gunicorn -w 4 -b 0.0.0.0:7000 index:app
+CMD gunicorn -b 0.0.0.0:$PORT index:app

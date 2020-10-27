@@ -13,8 +13,9 @@ $ gunicorn -w 4 -b 0.0.0.0:7000 index:app
 ```
 
 ### Docker
+Passing a PORT env variable.
 ```bash
-$ docker build -t kornia-app:v0.3 .
+$ docker build PORT=7000 -t kornia-app:v0.3 .
 ```
 
 ## Development
