@@ -14,5 +14,6 @@
 
 <div style="height: 100%; position: relative; flex: 1; min-width: 0px;">
     <mat-toolbar style="display: block; flex: none;"></mat-toolbar>
+    <mat-progress-bar mode="indeterminate" *ngIf="in_computing"></mat-progress-bar>
     <kornia-playground style="height: calc(100% - 64px);"></kornia-playground>
 </div>

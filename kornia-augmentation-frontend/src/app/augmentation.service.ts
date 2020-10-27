@@ -23,6 +23,7 @@ export class AugmentationService{
   results = new BehaviorSubject<object>({images: [], params: []});
   codes = new BehaviorSubject<object>({code: ''});
   image = new BehaviorSubject<Blob>(undefined);
+  in_computing = new BehaviorSubject<boolean>(false);
   formData = new BehaviorSubject<object[]>([]);
 
   computeAugmentation(step_list) {
@@ -39,14 +40,16 @@ export class AugmentationService{
   }
 
   private _computeAugmentationByServer(data) {
+    this.in_computing.next(true);
     var fileReader = new FileReader();
     fileReader.readAsDataURL(this.image.getValue())
     fileReader.onload = () => {
         const formData = new FormData();  
         formData.append('file', this.image.getValue()); 
         formData.append('setting', JSON.stringify(data)); 
-        this.http.post(`${environment.apiURL}/augmentation/compute`, formData).subscribe(data => {
+        this.http.post(`${environment.apiURL}/augmentation/compute`, formData).pipe(take(1)).subscribe(data => {
           this.results.next(data);
+          this.in_computing.next(false);
         });
      }
   }
@@ -63,7 +66,7 @@ export class AugmentationService{
     const formData = new FormData();
     formData.append('file', null); 
     formData.append('setting', JSON.stringify(this.formData.getValue())); 
-    this.http.post(`${environment.apiURL}/augmentation/getcode`, formData).subscribe(data => {
+    this.http.post(`${environment.apiURL}/augmentation/getcode`, formData).pipe(take(1)).subscribe(data => {
       console.log(data['code'])
       this.codes.next(data);
     });

@@ -38,12 +38,12 @@
               <!-- Disable above -->
             </div>
             <ng-container *ngIf="!isDebugMode">
-              <button mat-fab color="primary" [disabled]="(augmentationList.length == 0) || !image" (click)="runAll()">
+              <button mat-fab color="primary" [disabled]="(augmentationList.length == 0) || !image || in_computing" (click)="runAll()">
                 <mat-icon>play_arrow</mat-icon>
               </button>
             </ng-container>
             <div *ngIf="isDebugMode">
-              <button mat-fab color="primary" [disabled]="(augmentationList.length == 0) || !image" (click)="runOneStep()">
+              <button mat-fab color="primary" [disabled]="(augmentationList.length == 0) || !image || in_computing" (click)="runOneStep()">
                 <mat-icon>skip_next</mat-icon>
               </button>
               <button mat-fab color="primary" (click)="clearSteps()">

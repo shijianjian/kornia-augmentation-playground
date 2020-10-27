@@ -1,4 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+
 import { AugmentationService } from '../augmentation.service';
 
 @Component({
@@ -10,10 +12,12 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   @Input() hidden;
 
-  codes = "";
-  codes_sub;
-  image;
-  image_sub;
+  codes: string = "";
+  codes_sub: Subscription;
+  image: Blob;
+  image_sub: Subscription;
+  in_computing: boolean;
+  in_computing_sub: Subscription;
 
   current_step = 0
   isDisplayingCode = false;
@@ -36,11 +40,13 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.augmentationList = this.augmentationList2D;
     this.codes_sub = this.augmentationService.codes.subscribe(data => this.codes = data['code']);
     this.image_sub = this.augmentationService.image.subscribe(img => this.image = img);
+    this.in_computing_sub = this.augmentationService.in_computing.subscribe(data => this.in_computing = data);
   }
 
   ngOnDestroy() {
     this.codes_sub.unsubscribe();
     this.image_sub.unsubscribe();
+    this.in_computing_sub.unsubscribe();
   }
 
   onGetCode() {
