@@ -10,7 +10,7 @@ export class IconSideBarComponent implements OnInit {
   @Input() defaultItem: string;
   @Output() itemChanged = new EventEmitter()
 
-  allItems: string[] = ['2D', '3D'];
+  allItems: string[] = ['Aug', 'CV'];
   disableRipple = true;
 
   constructor() { }

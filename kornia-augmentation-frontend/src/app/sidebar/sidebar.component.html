@@ -1,59 +1,47 @@
 <mat-drawer-container class="sidebar-container">
-  <kornia-icon-side-bar class="icon-sidebar-container" [defaultItem]="augmentationType" (itemChanged)="onItemChanged($event)"></kornia-icon-side-bar>
-  <div class="expand-sidebar-container" *ngIf="!hidden">
-    <div style="flex-grow: 1; display: flex; flex-direction: column; width: 400px;">
-      <div style="display: flex; justify-content: space-between; padding-top: 3px;">
-        <div style="margin-left: 5px; line-height: 1.8em;"><b>Image Uploaded</b></div>
-        <mat-icon *ngIf="image" style="color: greenyellow;">check_circle</mat-icon>
-        <mat-icon *ngIf="!image" color="warn">highlight_off</mat-icon>
-      </div>
-      <kornia-image-uploader></kornia-image-uploader>
-      <div style="display: flex; justify-content: space-between; padding-top: 3px;">
-        <div style="margin-left: 5px; line-height: 1.8em;"><b>Augmentation Pipeline</b></div>
-        <mat-icon *ngIf="augmentationList.length > 0" style="color: greenyellow;">check_circle</mat-icon>
-        <mat-icon *ngIf="augmentationList.length == 0" color="warn">highlight_off</mat-icon>
-      </div>
-      <div style="display: flex; justify-content: space-between;">
-        <div></div>
-        <div style="padding: 1px 5px;">
-          <mat-icon class="clickable-icon" aria-hidden="false" matTooltip="Show code" (click)="onGetCode(); $event.stopPropagation();">code</mat-icon>
-          <!-- Implement ONNX later -->
-          <mat-icon class="clickable-icon" aria-hidden="false" matTooltip="Export ONNX model" style="display: none;"
-              (click)="onGetModel(); $event.stopPropagation();">get_app</mat-icon>
+  <div>
+    <div class="image-uploader-bar" (click)="onImageBarClicked(); $event.stopPropagation();">
+      <div style="margin-left: 5px; line-height: 1.8em;"><b>Image Uploaded</b></div>
+      <mat-icon *ngIf="image" style="color: greenyellow;">check_circle</mat-icon>
+      <mat-icon *ngIf="!image" color="warn">highlight_off</mat-icon>
+    </div>
+    <kornia-image-uploader *ngIf="showImageUploader"></kornia-image-uploader>
+  </div>
+
+  <div style="display: flex; flex: 1;">
+    <kornia-icon-side-bar class="icon-sidebar-container" [defaultItem]="operationType" (itemChanged)="onItemChanged($event)"></kornia-icon-side-bar>
+      
+    <div style="flex-grow: 1; width: 400px;">
+      <div class="expand-sidebar-container" *ngIf="!hidden">
+        <div style="display: flex; justify-content: space-between; padding-top: 3px;">
+          <div style="margin-left: 5px; line-height: 1.8em;"><b>Augmentation Pipeline</b></div>
+          <mat-icon *ngIf="augmentationList.length > 0" style="color: greenyellow;">check_circle</mat-icon>
+          <mat-icon *ngIf="augmentationList.length == 0" color="warn">highlight_off</mat-icon>
         </div>
-      </div>
-      <div class="augmentation-container">
-        <div *ngIf="!isDisplayingCode" class="augmentation-list-container">
-          <kornia-augmentation-list
-            style="flex: 1 1 auto; overflow-y: auto; height: 100px;"
-            (augmentationChanged)="onAugmentationChanged($event)"
-            [augmentationData]="augmentationList"></kornia-augmentation-list>
-          <div style="display: flex; justify-content: space-between; padding: 15px; border-top: 1px solid #555;">
-            <div style="display: flex; justify-content: center; align-items: center;">
-              <!-- Disable this for now -->
-              <div style="visibility: hidden;">
-                <mat-slide-toggle color="primary" [(ngModel)]="isDebugMode"></mat-slide-toggle>
-                <span>Debug Mode</span>
-              </div>
-              <!-- Disable above -->
-            </div>
-            <ng-container *ngIf="!isDebugMode">
-              <button mat-fab color="primary" [disabled]="(augmentationList.length == 0) || !image || in_computing" (click)="runAll()">
-                <mat-icon>play_arrow</mat-icon>
-              </button>
-            </ng-container>
-            <div *ngIf="isDebugMode">
-              <button mat-fab color="primary" [disabled]="(augmentationList.length == 0) || !image || in_computing" (click)="runOneStep()">
-                <mat-icon>skip_next</mat-icon>
-              </button>
-              <button mat-fab color="primary" (click)="clearSteps()">
-                <mat-icon>refresh</mat-icon>
-              </button>
-            </div>
+        <div style="display: flex; justify-content: space-between;">
+          <div style="padding: 1px 5px; line-height: 0.5em;">
+            <mat-icon class="clickable-icon" aria-hidden="false" matTooltip="Clear all" (click)="onClearAll()">clear_all</mat-icon>
+          </div>
+          <div style="padding: 1px 5px;">
+            <mat-icon class="clickable-icon" aria-hidden="false" matTooltip="Show code" (click)="onGetCode(); $event.stopPropagation();">code</mat-icon>
+            <!-- Implement ONNX later -->
+            <mat-icon class="clickable-icon" aria-hidden="false" matTooltip="Export ONNX model" style="display: none;"
+                (click)="onGetModel(); $event.stopPropagation();">get_app</mat-icon>
           </div>
         </div>
-        <div *ngIf="isDisplayingCode" class="coding-block">
-          {{ codes }}
+        <div class="augmentation-container" style="position: relative;">
+          <div *ngIf="!isDisplayingCode" class="augmentation-list-container">
+            <kornia-augmentation-list
+              style="flex: 1 1 auto; overflow-y: auto; height: 100px;"
+              (augmentationChanged)="onAugmentationChanged($event)"
+              [augmentationData]="augmentationList"></kornia-augmentation-list>
+          </div>
+          <div *ngIf="isDisplayingCode" class="coding-block">
+            {{ codes }}
+          </div>
+          <kornia-action-area
+            [disabled]="(augmentationList.length == 0) || !image || in_computing"
+            [operationData]="augmentationData"></kornia-action-area>
         </div>
       </div>
     </div>

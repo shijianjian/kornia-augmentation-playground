@@ -1,0 +1,23 @@
+<div style="display: flex; justify-content: space-between; padding: 15px; border-top: 1px solid #555;">
+  <div style="display: flex; justify-content: center; align-items: center;">
+    <!-- Disable this for now -->
+    <div style="visibility: hidden;">
+      <mat-slide-toggle color="primary" [(ngModel)]="isDebugMode"></mat-slide-toggle>
+      <span>Debug Mode</span>
+    </div>
+    <!-- Disable above -->
+  </div>
+  <ng-container *ngIf="!isDebugMode">
+    <button mat-fab color="primary" [disabled]="disabled" (click)="runAll()">
+      <mat-icon>play_arrow</mat-icon>
+    </button>
+  </ng-container>
+  <div *ngIf="isDebugMode">
+    <button mat-fab color="primary" [disabled]="disabled" (click)="runOneStep()">
+      <mat-icon>skip_next</mat-icon>
+    </button>
+    <button mat-fab color="primary" (click)="clearSteps()">
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </div>
+</div>

@@ -59,7 +59,7 @@ export class AugmentationListComponent {
   }
 
   onAugmentationListUpdated() {
-    this.augmentationChanged.emit(this._formData)
+    this.augmentationChanged.emit(this._formData);
   }
 
   updateFormDataIndex(previousIndex: number, currentIndex: number) {
