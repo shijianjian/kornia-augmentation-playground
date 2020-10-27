@@ -1,7 +1,10 @@
 <mat-drawer-container class="sidebar-container">
   <div>
     <div class="image-uploader-bar" (click)="onImageBarClicked(); $event.stopPropagation();">
-      <div style="margin-left: 5px; line-height: 1.8em;"><b>Image Uploaded</b></div>
+      <div style="margin-left: 5px; line-height: 1.8em;">
+        <b *ngIf="!hidden">Image Uploaded</b>
+        <b *ngIf="hidden">IMG&nbsp;</b>
+      </div>
       <mat-icon *ngIf="image" style="color: greenyellow;">check_circle</mat-icon>
       <mat-icon *ngIf="!image" color="warn">highlight_off</mat-icon>
     </div>
@@ -9,14 +12,17 @@
   </div>
 
   <div style="display: flex; flex: 1;">
-    <kornia-icon-side-bar class="icon-sidebar-container" [defaultItem]="operationType" (itemChanged)="onItemChanged($event)"></kornia-icon-side-bar>
+    <kornia-icon-side-bar
+      class="icon-sidebar-container"
+      [defaultItem]="operationType"
+      (itemChanged)="onOperationTypeChanged($event)"></kornia-icon-side-bar>
       
-    <div style="flex-grow: 1; width: 400px;">
-      <div class="expand-sidebar-container" *ngIf="!hidden">
+    <div style="flex-grow: 1; width: 400px;" *ngIf="!hidden">
+      <div class="expand-sidebar-container">
         <div style="display: flex; justify-content: space-between; padding-top: 3px;">
           <div style="margin-left: 5px; line-height: 1.8em;"><b>Augmentation Pipeline</b></div>
-          <mat-icon *ngIf="augmentationList.length > 0" style="color: greenyellow;">check_circle</mat-icon>
-          <mat-icon *ngIf="augmentationList.length == 0" color="warn">highlight_off</mat-icon>
+          <mat-icon *ngIf="operationData.length > 0" style="color: greenyellow;">check_circle</mat-icon>
+          <mat-icon *ngIf="operationData.length == 0" color="warn">highlight_off</mat-icon>
         </div>
         <div style="display: flex; justify-content: space-between;">
           <div style="padding: 1px 5px; line-height: 0.5em;">
@@ -31,17 +37,17 @@
         </div>
         <div class="augmentation-container" style="position: relative;">
           <div *ngIf="!isDisplayingCode" class="augmentation-list-container">
-            <kornia-augmentation-list
+            <kornia-operation-list
               style="flex: 1 1 auto; overflow-y: auto; height: 100px;"
-              (augmentationChanged)="onAugmentationChanged($event)"
-              [augmentationData]="augmentationList"></kornia-augmentation-list>
+              (operationDataChanged)="onOperationDataChanged($event)"
+              [operationData]="operationData"></kornia-operation-list>
           </div>
           <div *ngIf="isDisplayingCode" class="coding-block">
             {{ codes }}
           </div>
           <kornia-action-area
-            [disabled]="(augmentationList.length == 0) || !image || in_computing"
-            [operationData]="augmentationData"></kornia-action-area>
+            [disabled]="(operationData.length == 0) || !image || in_computing"
+            [operationData]="operationData"></kornia-action-area>
         </div>
       </div>
     </div>

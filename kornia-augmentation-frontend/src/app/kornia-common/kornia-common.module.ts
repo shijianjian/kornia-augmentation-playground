@@ -10,6 +10,7 @@ import { HeaderComponent } from './header/header.component';
 import { AutoFormComponent } from './auto-form/auto-form.component';
 import { AugmentationStatusService } from '../data/augmentation-status.service';
 import { FooterComponent } from './footer/footer.component';
+import { KorniaPipesModule } from '../pipes/kornia-pipes.module';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { FooterComponent } from './footer/footer.component';
     MatToolbarModule,
     MatButtonModule,
     FormlyModule,
-    FormlyMaterialModule
+    FormlyMaterialModule,
+    KorniaPipesModule,
   ],
   providers: [
     AugmentationStatusService

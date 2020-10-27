@@ -14,7 +14,7 @@ import { KorniaCommonModule } from './kornia-common/kornia-common.module';
 import { KorniaPlaygroundModule } from "./playground/playground.module";
 import { SidebarModule } from "./sidebar/sidebar.module";
 import { AugmentationService } from "./augmentation.service";
-import { PipesModule } from './pipes/pipes.module';
+import { KorniaPipesModule } from './pipes/kornia-pipes.module';
 
 
 @NgModule({
@@ -34,7 +34,7 @@ import { PipesModule } from './pipes/pipes.module';
     KorniaCommonModule,
     KorniaPlaygroundModule,
     SidebarModule,
-    PipesModule.forRoot()
+    KorniaPipesModule.forRoot()
   ],
   providers: [
     AugmentationService,

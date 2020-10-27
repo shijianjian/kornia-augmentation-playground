@@ -12,11 +12,11 @@ import { KorniaJsonPipe } from './kornia-json.pipe';
     ],
 })
 
-export class PipesModule {
+export class KorniaPipesModule {
 
   static forRoot() {
      return {
-         ngModule: PipesModule,
+         ngModule: KorniaPipesModule,
          providers: [],
      };
   }

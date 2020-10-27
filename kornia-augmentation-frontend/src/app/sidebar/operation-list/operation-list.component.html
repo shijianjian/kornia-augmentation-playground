@@ -1,15 +1,15 @@
 <div cdkDropList #mylist class="augmentation-list" (cdkDropListDropped)="drop($event)">
-  <kornia-augmentation-item
+  <kornia-operation-item
     class="augmentation-box"
-    *ngFor="let item of augmentationList; let i = index;"
+    *ngFor="let item of operationformData; let i = index;"
     cdkDrag
     (formUpdated)="onFormUpdated($event, i)"
     (formDeleted)="onFormDeleted($event, i)"
-    [item]="item"></kornia-augmentation-item>
+    [item]="item"></kornia-operation-item>
     <mat-chip-list style="margin-top:1em; display:block;">
       <mat-chip
         style="width:80%; margin:auto; text-align: center;"
         color="primary"
-        (click)="addNewAugmentation(undefined)" selected><b style="margin:auto;">+</b></mat-chip>
+        (click)="addOperation(undefined)" selected><b style="margin:auto;">+</b></mat-chip>
     </mat-chip-list>
 </div>

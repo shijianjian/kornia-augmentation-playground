@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable, forkJoin, of } from 'rxjs';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 
@@ -7,31 +6,43 @@ import { object_add_suffix, get_random_id } from "./utils";
 
 @Injectable()
 export class AugmentationStatusService {
-  constructor(private http: HttpClient) {}
 
-  getAugmentationFieldData(name: string): Observable<any> {
-    let random_id = `-${get_random_id()}`
+  private supported_augmentation_list = [
+    'RandomHorizontalFlip',
+    'RandomVerticalFlip',
+    'RandomRotation',
+    'RandomAffine',
+    'RandomPerspective',
+    'RandomErasing',
+    'CenterCrop',
+    'RandomCrop',
+    'RandomResizedCrop',
+    'RandomMotionBlur',
+    'ColorJitter',
+    'RandomGrayscale',
+    'RandomSolarize',
+    'RandomPosterize',
+    'RandomEqualize',
+  ]
+
+  constructor() {}
+
+  getAugmentationFieldData(name: string, random_id?: string): Observable<any> {
+    if (random_id == undefined || random_id == null) {
+      random_id = get_random_id();
+    }
+    random_id = `-${random_id}`;
+    return forkJoin([this.getDefault(name, random_id), this.getFields(name, random_id)]);
+  }
+
+  getRandomAugmentationFieldData(): Observable<any> {
+    let name = this.supported_augmentation_list[0];
+    let random_id = `-${get_random_id()}`;
     return forkJoin([this.getDefault(name, random_id), this.getFields(name, random_id)]);
   }
 
   getAugmentationList(): Observable<any> {
-    return of([
-      'RandomHorizontalFlip',
-      'RandomVerticalFlip',
-      'RandomRotation',
-      'RandomAffine',
-      'RandomPerspective',
-      'RandomErasing',
-      'CenterCrop',
-      'RandomCrop',
-      'RandomResizedCrop',
-      'RandomMotionBlur',
-      'ColorJitter',
-      'RandomGrayscale',
-      'RandomSolarize',
-      'RandomPosterize',
-      'RandomEqualize',
-    ])
+    return of(this.supported_augmentation_list);
   }
 
   getDefault(name: string, random_id: string): Observable<any>  {
@@ -135,7 +146,7 @@ export class AugmentationStatusService {
         this.getCommonFields("p" + random_id, "Probablities of applying the augmentation", 0, 1)
       ]);
     }
-    alert("This function is not yet supported.")
+    alert(`${name} is not yet supported.`)
     return of([this.getCommonFields("p" + random_id, "This function has not been added yet.", 0, 1)]);
     }
 

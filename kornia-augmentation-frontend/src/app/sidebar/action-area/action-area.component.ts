@@ -19,8 +19,7 @@ export class ActionAreaComponent implements OnInit {
     private augmentationService: AugmentationService
   ) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   runOneStep() {
     if (this.current_step >= this.operationData.length) {
@@ -29,7 +28,7 @@ export class ActionAreaComponent implements OnInit {
       return
     }
     this.augmentationService.clearCurrentResults();
-    this.augmentationService.computeAugmentation(this.current_step);
+    this.augmentationService.computeAugmentation([this.current_step]);
     this.current_step += 1;
   }
 

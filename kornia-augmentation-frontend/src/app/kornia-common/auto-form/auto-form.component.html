@@ -1,32 +1,19 @@
-<!-- <form class="example-container" [formGroup]="options" [style.fontSize.px]="getFontSize()">
-  <mat-form-field *ngFor="let item of data" appearance="fill">
-    <mat-label>{{item.name}}</mat-label>
-    <ng-container *ngIf="item.category == 'select'">
-      <mat-select [formControl]="colorControl">
-        <mat-option value="primary">Primary</mat-option>
-        <mat-option value="accent">Accent</mat-option>
-        <mat-option value="warn">Warn</mat-option>
-      </mat-select>
-    </ng-container>
-  </mat-form-field>
-</form> -->
-
 <form [formGroup]="form">
   <div style="margin-bottom: 10px;">
     <mat-form-field appearance="fill">
-      <mat-label>Augmentation</mat-label>
-      <mat-select (selectionChange)="onSelectionChange($event);" formControlName="augmentation">
+      <mat-label>{{ autoFormName | korniajson }}</mat-label>
+      <mat-select (selectionChange)="onFormControlUpdated(undefined, $event.value);" [formControlName]="autoFormName">
         <mat-option *ngFor="let item of selectionList" [value]="item">
           {{item}}
         </mat-option>
       </mat-select>
     </mat-form-field>
   </div>
-  <div *ngIf="selectedAugmentation" style="display: block;">
+  <div *ngIf="operation?.kwargs" style="display: block;">
     <div style="display: flex; justify-content: space-between; min-width: 300px;">
-      <formly-form [model]="model" [fields]="fields_left" [form]="form_left" (modelChange)="submit()"></formly-form>
+      <formly-form [model]="model" [fields]="fields_left" [form]="form_left" (modelChange)="onFormControlUpdated(model)"></formly-form>
       <div style="height: 100%; padding: 3px;"></div>
-      <formly-form [model]="model" [fields]="fields_right" [form]="form_right" (modelChange)="submit()"></formly-form>
+      <formly-form [model]="model" [fields]="fields_right" [form]="form_right" (modelChange)="onFormControlUpdated(model)"></formly-form>
     </div>
   </div>
 </form>

@@ -7,13 +7,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { KorniaCommonModule } from "../../../kornia-common/kornia-common.module";
-import { AugmentationItemComponent } from './augmentation-item.component';
-import { PipesModule } from 'src/app/pipes/pipes.module';
+import { OperationItemComponent } from './operation-item.component';
+import { KorniaPipesModule } from 'src/app/pipes/kornia-pipes.module';
 
 
 @NgModule({
   declarations: [
-    AugmentationItemComponent
+    OperationItemComponent
   ],
   imports: [
     CommonModule,
@@ -22,10 +22,10 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
     MatIconModule,
     MatButtonModule,
     KorniaCommonModule,
-    PipesModule
+    KorniaPipesModule
   ],
   exports: [
-    AugmentationItemComponent
+    OperationItemComponent
   ],
 })
-export class AugmentationItemModule { }
+export class OperationItemModule { }

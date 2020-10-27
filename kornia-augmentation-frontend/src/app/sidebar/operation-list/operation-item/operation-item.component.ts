@@ -1,28 +1,24 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { KorniaFormDataControl } from 'src/app/data/utils';
 
 @Component({
-  selector: 'kornia-augmentation-item',
-  templateUrl: './augmentation-item.component.html',
-  styleUrls: ['./augmentation-item.component.css']
+  selector: 'kornia-operation-item',
+  templateUrl: './operation-item.component.html',
+  styleUrls: ['./operation-item.component.css']
 })
-export class AugmentationItemComponent {
+export class OperationItemComponent {
 
-  @Input() item: object;
+  @Input() item: KorniaFormDataControl;
   @Output() formUpdated = new EventEmitter<object>();
   @Output() formDeleted = new EventEmitter<object>();
 
-  fields;
   panel_opened = false;
   show_details = true;
 
-  constructor() {
-  }
+  constructor() { }
 
-  onFormUpdated(fields: object) {
-    this.fields = {};
-    this.fields['name'] = this.item['name'];
-    this.fields['kwargs'] = fields;
-    this.formUpdated.emit(this.fields);
+  onFormUpdated(item: KorniaFormDataControl) {
+    this.formUpdated.emit(item);
   }
 
   onOpened() { this.panel_opened = true; }

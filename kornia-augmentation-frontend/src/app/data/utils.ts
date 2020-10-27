@@ -16,11 +16,37 @@ export function object_add_suffix(obj, suffix) {
     });
     return Object.assign({}, ...keyValues);
 }
-  
+
+
 export function object_remove_suffix(obj) {
     const keyValues = Object.keys(obj).map(key => {
         const newKey = key.substring(0, key.length - 9);
         return { [newKey]: obj[key] };
     });
     return Object.assign({}, ...keyValues);
+}
+
+
+export class KorniaFormDataControl {
+    private _name: string;
+    private _kwargs: object;
+    private _timestamp: string;
+
+    constructor(name: string, kwargs: object, timestamp?: string) {
+        this._name = name;
+        this._kwargs = kwargs;
+        if (timestamp) {
+            this._timestamp = timestamp;
+        } else {
+            this._timestamp = get_random_id()
+        }
+    }
+
+    get name() { return this._name; }
+    get kwargs() { return this._kwargs; }
+    get timestamp() { return this._timestamp; }
+
+    set name(value) { this._name = value; }
+    set kwargs(value) { this._kwargs = value; }
+
 }

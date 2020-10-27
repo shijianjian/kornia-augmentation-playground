@@ -1,7 +1,10 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 import { AugmentationService } from '../augmentation.service';
+import { OperationDataService } from '../data/operation-data.service';
+import { KorniaFormDataControl } from '../data/utils';
 
 @Component({
   selector: 'kornia-sidebar',
@@ -23,24 +26,20 @@ export class SidebarComponent implements OnInit, OnDestroy {
   showImageUploader = true;
   operationType: string = 'Aug';
 
-  augmentationData = [];
-  augmentationList = [];
-  private augmentationList2D = [
-    {name: 'RandomHorizontalFlip', kwargs: {p: 0.5}},
-    {name: 'RandomVerticalFlip', kwargs: {p: 0.5}},
-    {name: 'ColorJitter', kwargs: {p: 0.5}},
-  ];
-  private augmentationList3D = []
+
+  operationData: KorniaFormDataControl[] = [];
 
   constructor(
-    private augmentationService: AugmentationService
+    private augmentationService: AugmentationService,
+    private operationDataService: OperationDataService
   ) { }
 
   ngOnInit() {
-    this.augmentationList = this.augmentationList2D;
     this.codes_sub = this.augmentationService.codes.subscribe(data => this.codes = data['code']);
     this.image_sub = this.augmentationService.image.subscribe(img => this.image = img);
     this.in_computing_sub = this.augmentationService.in_computing.subscribe(data => this.in_computing = data);
+    console.log(this.operationData)
+    this.operationDataService.operationData.pipe(take(1)).subscribe(data => {this.operationData = data['2D']})
   }
 
   ngOnDestroy() {
@@ -62,32 +61,20 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   onClearAll() {
     if (confirm("You are going to delete all operations.")) {
-      this.augmentationList = [];
+      this.operationData = [];
       this.augmentationService.clearCurrentResults();
     }
   }
 
-  onItemChanged(event) {
-    if (event == 'Aug') {
-      this.augmentationList = this.augmentationList2D;
-    } else if (event == 'CV') {
-      this.augmentationList = this.augmentationList3D;
-    } else {
-      console.error(`${event} is not implemented.`)
-    }
+  onOperationTypeChanged(event) {
+    this.operationDataService.updateOperationDataByKey(event);
     this.operationType = event;
   }
 
-  onAugmentationChanged(event) {
-    this.augmentationData = event;
-    if (this.operationType == 'Aug') {
-      this.augmentationList2D = this.augmentationData;
-    } else if (this.operationType == 'CV') {
-      this.augmentationList3D = this.augmentationData;
-    } else {
-      console.error(`${this.operationType} is not implemented.`)
-    }
-    this.augmentationService.formData.next(this.augmentationData);
+  onOperationDataChanged(event) {
+    this.operationDataService.saveCurrentOperationData(this.operationType, event);
+    this.augmentationService.korniaFormData.next(event);
+    this.operationData = event;
   }
 
   onImageBarClicked() {

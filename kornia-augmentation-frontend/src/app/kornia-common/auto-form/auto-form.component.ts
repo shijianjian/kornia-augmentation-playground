@@ -1,8 +1,9 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
+import { FormlyFieldConfig } from '@ngx-formly/core';
 
 import { AugmentationStatusService } from '../../data/augmentation-status.service';
+import { KorniaFormDataControl, get_random_id } from "src/app/data/utils";
 
 @Component({
   selector: 'kornia-auto-form',
@@ -11,24 +12,25 @@ import { AugmentationStatusService } from '../../data/augmentation-status.servic
 })
 export class AutoFormComponent implements OnInit {
 
-  @Input() defaultAugmentation: string
-  @Output() augmentationSelected = new EventEmitter<string>();
+  autoFormName: string;
+  @Input() operation: KorniaFormDataControl;
   @Output() formUpdated = new EventEmitter<object>();
 
   form: FormGroup;
   form_left: FormGroup;
   form_right: FormGroup;
-  options: FormlyFormOptions = {};
   model: any;
-  fields_left: FormlyFieldConfig[];
-  fields_right: FormlyFieldConfig[];
+  fields_left: FormlyFieldConfig[] = [];
+  fields_right: FormlyFieldConfig[] = [];
 
-  selectedAugmentation: string;
   selectionList: [];
 
-  constructor(private augmentationStatusService: AugmentationStatusService) {
+  constructor(
+    private augmentationStatusService: AugmentationStatusService
+  ) {
+    this.autoFormName = `operation_${get_random_id()}`;
     this.augmentationStatusService.getAugmentationList().subscribe(selectionList => {
-      this.form = new FormGroup({augmentation: new FormControl('')});
+      this.form = new FormGroup({[this.autoFormName]: new FormControl('')});
       this.form_left = new FormGroup({});
       this.form_right = new FormGroup({});
       this.selectionList = selectionList;
@@ -36,28 +38,39 @@ export class AutoFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.defaultAugmentation != undefined) {
-      this.form.controls['augmentation'].setValue(this.defaultAugmentation);
-      this.onSelectionChange({value: this.defaultAugmentation});
-      this.submit();
+    if (this.operation != undefined) {
+      this.setOperation(this.operation);
     }
   }
 
-  onSelectionChange(event) {
-    this.selectedAugmentation = event.value;
-    this.augmentationSelected.emit(event.value);
-    this.augmentationStatusService.getAugmentationFieldData(event.value).subscribe(([model, fields]) => {
-      this.model = model;
-      this.fields_left = this.mapFields(fields, 'left');
-      this.fields_right = this.mapFields(fields, 'right');
-      this.submit();
-    });
+  onFormControlUpdated(kwargs: object, name?: string) {
+    if (this.operation == undefined) {
+      // define the operation if it has not been set yet
+      this.operation = new KorniaFormDataControl(name, kwargs);
+      this.setOperation(this.operation);
+    } else {
+      if (this.form_left.valid && this.form_right.valid) {
+          this.operation.name = name;
+          this.operation.kwargs = kwargs;
+          this.setOperation(this.operation);
+      };
+    }
   }
 
-  submit() {
-    if (this.form_left.valid && this.form_right.valid) {
-      this.formUpdated.emit(Object.assign({}, this.model));
-    }
+  setOperation(operation: KorniaFormDataControl) {
+    this.form.controls[this.autoFormName].setValue(operation.name);
+    this.augmentationStatusService
+      .getAugmentationFieldData(operation.name, operation.timestamp).subscribe(([model, fields]) => {
+        if (operation.kwargs) {
+          this.model = this.operation.kwargs;
+        } else {
+          this.model = model;
+          this.operation.kwargs = model;
+        }
+        this.fields_left = this.mapFields(fields, 'left');
+        this.fields_right = this.mapFields(fields, 'right');
+        this.formUpdated.emit(this.operation);
+      });
   }
 
   /**

@@ -8,9 +8,9 @@
         <mat-icon *ngIf="!params[name]['batch_prob']" matTooltip='Not Applied Augmentation' color="warn">highlight_off</mat-icon>
         &nbsp;&nbsp;{{name}}
       </mat-list-item>
-      <mat-list style="margin-left: 70px; margin-top: -10px;">
+      <mat-list style="margin-left: 30px;">
           <div *ngFor="let item of getKeys(params[name])">
-              <mat-list-item style="margin: -20px;" *ngIf="item != 'batch_prob'">{{ item == 'batch_prob' ? 'applied' : item }}: {{ params[name][item] }}</mat-list-item>
+              <mat-list-item *ngIf="item != 'batch_prob'">{{ item }}: {{ params[name][item] | json }}</mat-list-item>
           </div>
       </mat-list>
   </ng-container>

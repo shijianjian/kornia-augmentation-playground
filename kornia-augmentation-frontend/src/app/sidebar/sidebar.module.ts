@@ -6,7 +6,7 @@ import { MatSidenavModule, MatTooltipModule, MatToolbarModule } from '@angular/m
 import { MatButtonModule, MatIconModule } from '@angular/material';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 
-import { AugmentationListModule } from './augmentation-list/augmentation-list.module';
+import { OperationListModule } from './operation-list/operation-list.module';
 import { SidebarComponent } from './sidebar.component';
 import { AugmentationService } from '../augmentation.service';
 import { IconSideBarModule } from './icon-side-bar/icon-side-bar.module';
@@ -26,7 +26,7 @@ import { ActionAreaModule } from './action-area/action-area.module';
     MatTooltipModule,
     MatToolbarModule,
     MatButtonModule,
-    AugmentationListModule,
+    OperationListModule,
     IconSideBarModule,
     ImageUploaderModule,
     ActionAreaModule

@@ -2,23 +2,23 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
-import { AugmentationItemModule } from './augmentation-item/augmentation-item.module';
-import { AugmentationListComponent } from './augmentation-list.component';
+import { OperationItemModule } from './operation-item/operation-item.module';
+import { OperationListComponent } from './operation-list.component';
 import { MatChipsModule, MatIconModule } from '@angular/material';
 
 @NgModule({
   declarations: [
-    AugmentationListComponent
+    OperationListComponent
   ],
   imports: [
     CommonModule,
     DragDropModule,
     MatChipsModule,
     MatIconModule,
-    AugmentationItemModule
+    OperationItemModule
   ],
   exports: [
-    AugmentationListComponent
+    OperationListComponent
   ]
 })
-export class AugmentationListModule { }
+export class OperationListModule { }
