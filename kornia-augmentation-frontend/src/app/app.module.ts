@@ -15,6 +15,7 @@ import { KorniaPlaygroundModule } from "./playground/playground.module";
 import { SidebarModule } from "./sidebar/sidebar.module";
 import { AugmentationService } from "./augmentation.service";
 import { KorniaPipesModule } from './pipes/kornia-pipes.module';
+import { ConfigService } from './config.service';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { KorniaPipesModule } from './pipes/kornia-pipes.module';
   ],
   providers: [
     AugmentationService,
+    ConfigService
   ],
   bootstrap: [AppComponent]
 })

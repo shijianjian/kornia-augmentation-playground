@@ -3,6 +3,26 @@ import kornia
 from kornia.augmentation import *
 
 
+def get_device_by_string(device):
+    if device == 'CPU': return torch.device('cpu')
+    if device == 'GPU': return torch.device('cuda')
+    if device == 'TPU':
+        try:
+            import torch_xla
+            return xm.xla_device()
+        except:
+            print("load TPU failed. falls back to CPU.")
+            return torch.device('cpu')
+    raise ValueError(f"load {device} failed")
+
+
+def get_device_by_dtype(dtype):
+    if dtype == 'float16': return torch.float16
+    if dtype == 'float32': return torch.float32
+    if dtype == 'float64': return torch.float64
+    raise ValueError(f"load {dtype} failed")
+
+
 def create_pipeline(settings):
     pipeline = []
     for setting in settings:
@@ -12,8 +32,9 @@ def create_pipeline(settings):
     return torch.nn.Sequential(*pipeline)
 
 
-def create_image_tensor(image, num: int = 8):
-    return kornia.image_to_tensor(image, keepdim=False).repeat(num, 1, 1, 1)
+def create_image_tensor(image, num, device, dtype):
+    return kornia.image_to_tensor(image, keepdim=False).repeat(num, 1, 1, 1).to(
+        device=get_device_by_string(device), dtype=get_device_by_dtype(dtype))
 
 
 def generate_pipeline_code(settings):

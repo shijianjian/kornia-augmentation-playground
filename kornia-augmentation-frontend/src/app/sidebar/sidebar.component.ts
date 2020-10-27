@@ -26,7 +26,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
   showImageUploader = true;
   operationType: string = 'Aug';
 
-
   operationData: KorniaFormDataControl[] = [];
 
   constructor(
@@ -38,7 +37,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.codes_sub = this.augmentationService.codes.subscribe(data => this.codes = data['code']);
     this.image_sub = this.augmentationService.image.subscribe(img => this.image = img);
     this.in_computing_sub = this.augmentationService.in_computing.subscribe(data => this.in_computing = data);
-    console.log(this.operationData)
     this.operationDataService.operationData.pipe(take(1)).subscribe(data => {this.operationData = data['2D']})
   }
 
@@ -80,4 +78,5 @@ export class SidebarComponent implements OnInit, OnDestroy {
   onImageBarClicked() {
     this.showImageUploader = !this.showImageUploader
   }
+
 }

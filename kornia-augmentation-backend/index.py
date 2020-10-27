@@ -26,9 +26,10 @@ def root():
 def augmentation_compute():
 	in_file = request.files['file']
 	in_setting = eval(request.form['setting'])
-	print(in_setting)
+	in_device, in_dtype, in_batchsize = request.form['device'], request.form['dtype'], eval(request.form['batchsize'])
+	print(in_setting, in_device, in_dtype, in_batchsize)
 	image = skio.imread(in_file)[:, :, :3]
-	image_tensor = create_image_tensor(image, num=8) / 255.
+	image_tensor = create_image_tensor(image, num=in_batchsize, device=in_device, dtype=in_dtype) / 255.
 	pip = create_pipeline(in_setting)
 	res = pip(image_tensor)
 	params = {se['name']: aug._params for aug, se in zip(pip, in_setting)}
@@ -43,6 +44,21 @@ def get_augmentation_code():
 	print(in_setting)
 	res = generate_pipeline_code(in_setting)
 	return jsonify({"code": res})
+
+
+@app.route('/config/devices', methods=['GET'])
+def get_avaliable_devices():
+	_list = ['CPU']
+	if torch.cuda.is_available():
+		_list.append('GPU')
+	try:
+		import torch_xla
+		device = xm.xla_device()
+		torch.tensor(1, device=device)
+		_list.append('TPU')
+	except:
+		print("`torch_xla` is not installed or TPU not avaliable. Cannot check avaliability.")
+	return jsonify({"devices": _list})
 
 
 def tensor_to_images(tensor):

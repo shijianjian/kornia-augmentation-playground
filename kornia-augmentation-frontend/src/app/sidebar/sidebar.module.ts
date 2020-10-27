@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-import { MatSidenavModule, MatTooltipModule, MatToolbarModule } from '@angular/material';
+import { MatSidenavModule, MatTooltipModule, MatToolbarModule, MatRadioModule } from '@angular/material';
 import { MatButtonModule, MatIconModule } from '@angular/material';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 
@@ -21,10 +22,12 @@ import { ActionAreaModule } from './action-area/action-area.module';
     CommonModule,
     HttpClientModule,
     NgxDropzoneModule,
+    FormsModule,
     MatIconModule,
     MatSidenavModule,
     MatTooltipModule,
     MatToolbarModule,
+    MatRadioModule,
     MatButtonModule,
     OperationListModule,
     IconSideBarModule,

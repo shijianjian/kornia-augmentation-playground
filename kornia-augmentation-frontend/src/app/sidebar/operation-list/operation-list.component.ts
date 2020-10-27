@@ -50,7 +50,6 @@ export class OperationListComponent {
   }
 
   onAugmentationListUpdated() {
-    console.log(this.operationformData)
     this.operationDataChanged.emit(this.operationformData);
   }
 

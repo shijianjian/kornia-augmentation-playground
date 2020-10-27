@@ -1,1 +1,11 @@
-<kornia-results></kornia-results>
+<div style="height: 100%; position: relative; flex: 1; min-width: 0px;">
+    <mat-toolbar style="display: block; flex: none;">
+        <button
+            style="float: right; margin-top: 12px;"
+            mat-stroked-button
+            color="primary"
+            (click)="openDialog()">CONSOLE</button>
+    </mat-toolbar>
+    <mat-progress-bar mode="indeterminate" *ngIf="in_computing"></mat-progress-bar>
+    <kornia-results style="height: calc(100% - 64px);"></kornia-results>
+</div>

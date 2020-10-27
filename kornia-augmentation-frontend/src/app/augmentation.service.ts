@@ -6,13 +6,17 @@ import { take } from 'rxjs/operators';
 
 import { environment } from "src/environments/environment";
 import { KorniaFormDataControl, object_remove_suffix } from "src/app/data/utils";
+import { ConfigService } from './config.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AugmentationService{
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private configService: ConfigService
+  ) {
     this.http.get('assets/DefaultImage.png', { responseType: 'blob' })
       .pipe(take(1))
       .subscribe(data => {
@@ -54,10 +58,16 @@ export class AugmentationService{
             kwargs: object_remove_suffix(val.kwargs)
           }
         }); 
-        _formData.append('file', this.image.getValue()); 
-        _formData.append('setting', JSON.stringify(_data)); 
+        _formData.append('file', this.image.getValue());
+        _formData.append('setting', JSON.stringify(_data));
+        _formData.append('device', this.configService.device.getValue());
+        _formData.append('dtype', this.configService.dtype.getValue());
+        _formData.append('batchsize', this.configService.batchsize.getValue().toString());
         this.http.post(`${environment.apiURL}/augmentation/compute`, _formData).pipe(take(1)).subscribe(data => {
           this.results.next(data);
+          this.in_computing.next(false);
+        }, err => {
+          alert(`Operation failed: ${JSON.stringify(err)}`);
           this.in_computing.next(false);
         });
      }
@@ -84,6 +94,9 @@ export class AugmentationService{
     this.http.post(`${environment.apiURL}/augmentation/getcode`, _formData).pipe(take(1)).subscribe(data => {
       console.log(data['code'])
       this.codes.next(data);
+    }, err => {
+      alert(`Operation failed: ${JSON.stringify(err)}`);
+      this.in_computing.next(false);
     });
   }
 

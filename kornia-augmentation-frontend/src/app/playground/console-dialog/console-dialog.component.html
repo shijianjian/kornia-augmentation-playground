@@ -1,0 +1,41 @@
+<h2 mat-dialog-title>Configurations</h2>
+<mat-dialog-content style="min-width: 400px;">
+  <div class="device-group" style="display:flex; justify-content: space-between; border-bottom: 1px solid #555;">
+    <label style="line-height: 2em;">Device</label>
+    <mat-radio-group (change)='onDeviceChanged($event.value);' [(ngModel)]="device">
+      <mat-radio-button
+        class="device-group-btn"
+        *ngFor="let _device of devices"
+        [value]="_device">{{_device}}</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="dtype-group" style="display:flex; justify-content: space-between; border-bottom: 1px solid #555;">
+    <label style="line-height: 2em;">Dtype</label>
+    <mat-radio-group (change)='onDtypeChanged($event.value);' [(ngModel)]="dtype">
+      <mat-radio-button
+        class="device-group-btn"
+        *ngFor="let _dtype of dtypes"
+        [value]="_dtype">{{_dtype}}</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="dtype-group" style="display:flex; justify-content: space-between; border-bottom: 1px solid #555;">
+    <label style="line-height: 2em;">Dtype</label>
+    <mat-radio-group (change)='onBatchsizeChanged($event.value);' [(ngModel)]="batchsize">
+      <mat-radio-button
+        class="device-group-btn"
+        *ngFor="let _bs of batchsizes"
+        [value]="_bs">{{_bs}}</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+</mat-dialog-content>
+<!-- <mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button>
+</mat-dialog-actions> -->

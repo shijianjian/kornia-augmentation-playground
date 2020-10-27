@@ -2,11 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 
-import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule, MatToolbarModule, MatIconModule, MatProgressBarModule } from '@angular/material';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 
 import { PlaygroundComponent } from './playground.component';
 import { ResultsModule } from './results/results.module';
+import { ConsoleDialogModule } from './console-dialog/console-dialog.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,11 @@ import { ResultsModule } from './results/results.module';
     HttpClientModule,
     NgxDropzoneModule,
     MatIconModule,
-    ResultsModule
+    MatToolbarModule,
+    MatButtonModule,
+    MatProgressBarModule,
+    ResultsModule,
+    ConsoleDialogModule
   ],
   exports: [
     PlaygroundComponent
