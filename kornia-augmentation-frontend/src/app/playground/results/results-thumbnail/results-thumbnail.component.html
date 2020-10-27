@@ -1,13 +1,10 @@
-<div
-  style="display: flex; flex-direction: row; justify-content: start; max-height: 300px; width: 100%;"
+<div class="thumbernail-container"
   [style.justify-content]="wrap ? 'space-around' : 'start'"
-  [style.flex-wrap]="wrap ? 'wrap' : 'nowrap'"
-  [ngStyle]="{'overflow-x': wrap ? 'inherit' : 'auto', 'overflow-y': wrap ? 'auto' : 'inherit'}">
+  [ngStyle]="{'max-height': wrap ? '300px' : '100px'}">
   <div *ngFor="let base64 of images; let i = index;"
-    style="border: 1px solid #555; border-radius: 5px; margin: 5px;"
+    style="border: 1px solid #555; border-radius: 5px; margin: 5px; flex-wrap: wrap;"
     class="image-mask"
-    (click)="onClickImage(i); $event.stopPropagation();"
-    [style.flex-wrap]="wrap ? 'wrap': 'nowrap'">
+    (click)="onClickImage(i); $event.stopPropagation();">
       <mat-card>
         <img
           [ngStyle]="{'max-height': wrap ? '250px' : '50px', 'max-width': wrap ? '250px' : '50px'}"

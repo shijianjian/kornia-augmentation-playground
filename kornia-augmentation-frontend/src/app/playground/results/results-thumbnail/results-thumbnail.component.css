@@ -8,3 +8,12 @@
     background-color: rgba(0, 0, 0, 0.9);
     cursor: pointer;
 }
+
+.thumbernail-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    width: 100%;
+    flex-wrap: wrap;
+    overflow-y: auto;
+}
