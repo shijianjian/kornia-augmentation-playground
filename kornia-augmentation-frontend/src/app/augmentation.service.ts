@@ -1,15 +1,24 @@
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, forkJoin, BehaviorSubject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
+import { take } from 'rxjs/operators';
+
 import { environment } from "src/environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
-export class AugmentationService {
+export class AugmentationService{
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.http.get('assets/DefaultImage.png', { responseType: 'blob' })
+      .pipe(take(1))
+      .subscribe(data => {
+        var file = new File([data], 'DefaultImage.png', {type:"image/png"});
+        this.image.next(file);
+      });
+  }
 
   results = new BehaviorSubject<object>({images: [], params: []});
   codes = new BehaviorSubject<object>({code: ''});

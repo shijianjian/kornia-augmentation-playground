@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { take } from 'rxjs/operators';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 import { AugmentationService } from 'src/app/augmentation.service';
 
@@ -9,51 +8,53 @@ import { AugmentationService } from 'src/app/augmentation.service';
   templateUrl: './image-uploader.component.html',
   styleUrls: ['./image-uploader.component.css']
 })
-export class ImageUploaderComponent implements OnInit {
+export class ImageUploaderComponent implements OnInit, OnDestroy {
 
   public imagePath;
   imgURL: any;
   public message: string;
 
+  private imageSub: Subscription;
+
   title = 'Image Zone';
 
-  constructor(private augmentationService: AugmentationService, private http: HttpClient) { }
+  constructor(private augmentationService: AugmentationService) { }
 
   ngOnInit() {
-    this.http.get('assets/DefaultImage.png', { responseType: 'blob' })
-        .pipe(take(1))
-        .subscribe(data => {
-          var file = new File([data], 'DefaultImage.png', {type:"image/png"});
-          this.processing([file]);
-        });
+    this.imageSub = this.augmentationService.image.subscribe(data => {
+      this.showImage(data);
+    });
   }
  
-  processing(files) {
-    if (!this.inputCheck(files)) { return }
+  ngOnDestroy() {
+    this.imageSub.unsubscribe()
+  }
+
+  showImage(file) {
+    if (!this.inputCheck(file)) { return }
     var reader = new FileReader();
-    this.imagePath = files;
-    reader.readAsDataURL(files[0]); 
+    this.imagePath = file;
+    reader.readAsDataURL(file); 
     reader.onload = (_event) => { 
       this.imgURL = reader.result; 
     }
-    this.augmentationService.image.next(files[0]);
   }
 
   onSelect(event) {
-      this.processing(event.addedFiles);
+    if (!this.inputCheck(event.addedFiles[0])) { return }
+    this.augmentationService.image.next(event.addedFiles[0]);
   }
 
   onRemove(event) {
-      console.log(event);
-      this.imgURL = undefined;
-      this.augmentationService.image.next(undefined);
+    this.imgURL = undefined;
+    this.augmentationService.image.next(undefined);
   }
 
-  private inputCheck(files) {
-    if (files.length === 0) { return false; }
+  private inputCheck(file) {
+    if (file == undefined) { return; }
     const maxAllowedSize = 2;
-    var mimeType = files[0].type;
-    var size = files[0].size;
+    var mimeType = file.type;
+    var size = file.size;
     if (mimeType.match(/image\/*/) == null) {
       alert("Only images are supported.");
       return false;
