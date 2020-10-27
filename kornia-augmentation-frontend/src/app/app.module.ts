@@ -14,11 +14,12 @@ import { KorniaCommonModule } from './kornia-common/kornia-common.module';
 import { KorniaPlaygroundModule } from "./playground/playground.module";
 import { SidebarModule } from "./sidebar/sidebar.module";
 import { AugmentationService } from "./augmentation.service";
+import { PipesModule } from './pipes/pipes.module';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,9 +34,10 @@ import { AugmentationService } from "./augmentation.service";
     KorniaCommonModule,
     KorniaPlaygroundModule,
     SidebarModule,
+    PipesModule.forRoot()
   ],
   providers: [
-    AugmentationService
+    AugmentationService,
   ],
   bootstrap: [AppComponent]
 })

@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { KorniaCommonModule } from "../../../kornia-common/kornia-common.module";
 import { AugmentationItemComponent } from './augmentation-item.component';
+import { PipesModule } from 'src/app/pipes/pipes.module';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { AugmentationItemComponent } from './augmentation-item.component';
     MatFormFieldModule,
     MatIconModule,
     MatButtonModule,
-    KorniaCommonModule
+    KorniaCommonModule,
+    PipesModule
   ],
   exports: [
     AugmentationItemComponent

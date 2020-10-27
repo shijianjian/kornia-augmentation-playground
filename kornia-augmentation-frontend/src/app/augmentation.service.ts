@@ -5,6 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 import { take } from 'rxjs/operators';
 
 import { environment } from "src/environments/environment";
+import { object_remove_suffix } from "src/app/data/utils";
 
 @Injectable({
   providedIn: 'root'
@@ -44,9 +45,16 @@ export class AugmentationService{
     var fileReader = new FileReader();
     fileReader.readAsDataURL(this.image.getValue())
     fileReader.onload = () => {
-        const formData = new FormData();  
+        const formData = new FormData(); 
+        formData.append('file', null);
+        let _data = data.map((val) => {
+          return {
+            name: val['name'],
+            kwargs: object_remove_suffix(val['kwargs'])
+          }
+        }); 
         formData.append('file', this.image.getValue()); 
-        formData.append('setting', JSON.stringify(data)); 
+        formData.append('setting', JSON.stringify(_data)); 
         this.http.post(`${environment.apiURL}/augmentation/compute`, formData).pipe(take(1)).subscribe(data => {
           this.results.next(data);
           this.in_computing.next(false);
@@ -64,8 +72,15 @@ export class AugmentationService{
       return
     }
     const formData = new FormData();
-    formData.append('file', null); 
-    formData.append('setting', JSON.stringify(this.formData.getValue())); 
+    formData.append('file', null);
+    let data = this.formData.getValue().map((val) => {
+      return {
+        name: val['name'],
+        kwargs: object_remove_suffix(val['kwargs'])
+      }
+    });
+    console.log(data)
+    formData.append('setting', JSON.stringify(data)); 
     this.http.post(`${environment.apiURL}/augmentation/getcode`, formData).pipe(take(1)).subscribe(data => {
       console.log(data['code'])
       this.codes.next(data);

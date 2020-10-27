@@ -1,15 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, forkJoin } from 'rxjs';
+import { Observable, forkJoin, of } from 'rxjs';
 import { FormlyFieldConfig } from '@ngx-formly/core';
-import { of } from 'rxjs';
+
+import { object_add_suffix, get_random_id } from "./utils";
+
+const toRegexRange = require('to-regex-range');
 
 @Injectable()
 export class AugmentationStatusService {
   constructor(private http: HttpClient) {}
 
   getAugmentationFieldData(name: string): Observable<any> {
-    return forkJoin([this.getDefault(name), this.getFields(name)]);
+    let random_id = `-${get_random_id()}`
+    return forkJoin([this.getDefault(name, random_id), this.getFields(name, random_id)]);
   }
 
   getAugmentationList(): Observable<any> {
@@ -32,52 +36,63 @@ export class AugmentationStatusService {
     ])
   }
 
-  getDefault(name: string): Observable<any>  {
+  getDefault(name: string, random_id: string): Observable<any>  {
     // return this.http.get<{ firstName: string, lastName: string }>('assets/json-powered/user_json');
     if ((name == "RandomHorizontalFlip") || (name == "RandomVerticalFlip")) {
-      return of({p: 0.5});
+      return of(object_add_suffix({p: 0.5}, random_id));
     }
     if (name == "ColorJitter") {
-      return of({
+      return of(object_add_suffix({
         p: 0.5, brightness: 0.5, contrast: 0.5, saturation: 0.5, hue: 0.3
-      });
+      }, random_id));
     }
-    return of({p: 0.5});
+    if (name == "RandomAffine") {
+      return of(object_add_suffix({
+        p: 0.5, degree: 60
+      }, random_id));
+    }
+    return of(object_add_suffix({p: 0.5}, random_id));
   }
 
-  getFields(name: string): Observable<any> {
+  getFields(name: string, random_id: string): Observable<any> {
     // return this.http.get<FormlyFieldConfig[]>('assets/json-powered/user-form_json');
     if ((name == "RandomHorizontalFlip") || (name == "RandomVerticalFlip")) {
-      return of([this.getCommonFields("p", "Probablities of applying the augmentation")]);
+      return of([this.getCommonFields("p" + random_id, "Probablities of applying the augmentation", 0, 1)]);
     }
     if (name == "ColorJitter") {
       return of([
-        this.getCommonFields("brightness", "Brightness range"),
-        this.getCommonFields("contrast", "Contrast range"),
-        this.getCommonFields("saturation", "Saturation range"),
-        this.getCommonFields("hue", "Hue range"),
-        this.getCommonFields("p", "Probablities of applying the augmentation"),
+        this.getCommonFields("brightness" + random_id, "Brightness range", 0, 1),
+        this.getCommonFields("contrast" + random_id, "Contrast range", 0, 1),
+        this.getCommonFields("saturation" + random_id, "Saturation range", 0, 1),
+        this.getCommonFields("hue" + random_id, "Hue range", 0, 1),
+        this.getCommonFields("p" + random_id, "Probablities of applying the augmentation", 0, 1),
       ]);
     }
-    return of([this.getCommonFields("p", "This function has not been added yet.")]);
+    if (name == "RandomAffine") {
+      return of([
+        this.getCommonFields("degree" + random_id, "Degree range", 0, 360),
+        this.getCommonFields("p" + random_id, "Probablities of applying the augmentation", 0, 1),
+      ]);
+    }
+    return of([this.getCommonFields("p" + random_id, "This function has not been added yet.", 0, 1)]);
     }
 
-  getCommonFields(key, label) {
+  getCommonFields(key, label, min, max) {
     return {
       key: key,
       type: "input",
       templateOptions: {
         type: "number",
         label: label,
-        pattern: "^(0(\.[0-9]{1,4})?|1(\.0{1,4})?)$"
+        min: min,
+        max: max,
       },
       validation: {
         messages: {
-          pattern: (error, field: FormlyFieldConfig) => `Expected to be within 0 to 1. Got "${field.formControl.value}".`,
+          min: (error, field: FormlyFieldConfig) => `Expected to be within ${min} to ${max}. Got "${field.formControl.value}".`,
+          max: (error, field: FormlyFieldConfig) => `Expected to be within ${min} to ${max}. Got "${field.formControl.value}".`,
         },
       },
     }
   }
-
-
 }
