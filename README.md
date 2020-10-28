@@ -1,19 +1,22 @@
 # Kornia Augmentation Playground
 
-Demo app for experimenting data augmentations. For each setting, it would generate 8 outputs.
+Demo app for experimenting data augmentations. [Demo URL](https://kornia-augmentation-playground.herokuapp.com/).
 
 ![-](./misc/demo.gif)
 
 ## How to run
 ### Local build
 ```bash
+$ cd kornia-augmentation-frontend
+$ npm install
+$ cd ..
 $ sh deploy.sh
 $ cd dist
 $ gunicorn -w 4 -b 0.0.0.0:7000 index:app
 ```
 
 ### Docker
-Passing a PORT env variable.
+Passing a PORT env variable. It will perform an automatic binding.
 ```bash
 $ docker build PORT=7000 -t kornia-app:v0.3 .
 ```
@@ -38,7 +41,5 @@ $ python index.py
 Currently, only ```RandomHorizontalFlip```, ```RandomVerticalFlip``` and ```ColorJitter``` are fully supported.
 
 The future direction shall be:
-1.  supporting all 2D augmentations
-2.  supporting all 3D augmentations / visualizations
-3.  supporting in-browser computation by generating ONNX model
-4.  code auto-generation
+1.  supporting all 3D augmentations / visualizations
+2.  supporting in-browser computation by generating ONNX model
