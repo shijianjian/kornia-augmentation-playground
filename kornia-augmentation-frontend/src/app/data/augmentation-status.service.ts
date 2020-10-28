@@ -146,6 +146,7 @@ export class AugmentationStatusService {
         this.getCommonFields("p" + random_id, "Probablities of applying the augmentation", 0, 1)
       ]);
     }
+    console.log(name)
     alert(`${name} is not yet supported.`)
     return of([this.getCommonFields("p" + random_id, "This function has not been added yet.", 0, 1)]);
     }
@@ -157,8 +158,12 @@ export class AugmentationStatusService {
       templateOptions: {
         type: "number",
         label: label,
+        step: (max - min) / 100,
         min: min,
         max: max,
+      },
+      modelOptions: {
+        updateOn: 'blur',
       },
       validation: {
         messages: {

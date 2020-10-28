@@ -50,14 +50,17 @@ export class AutoFormComponent implements OnInit {
       this.setOperation(this.operation);
     } else {
       if (this.form_left.valid && this.form_right.valid) {
+        if (name != undefined) {
           this.operation.name = name;
-          this.operation.kwargs = kwargs;
-          this.setOperation(this.operation);
+        }
+        this.operation.kwargs = kwargs;
+        this.setOperation(this.operation);
       };
     }
   }
 
   setOperation(operation: KorniaFormDataControl) {
+    console.log(operation)
     this.form.controls[this.autoFormName].setValue(operation.name);
     this.augmentationStatusService
       .getAugmentationFieldData(operation.name, operation.timestamp).subscribe(([model, fields]) => {
