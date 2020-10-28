@@ -4,6 +4,8 @@ import { KorniaFormDataControl } from 'src/app/data/utils';
 import { AugmentationStatusService } from 'src/app/data/augmentation-status.service';
 import { Subscription } from 'rxjs';
 import { AugmentationService } from 'src/app/augmentation.service';
+import { OperationDataService } from 'src/app/data/operation-data.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'kornia-operation-list',
@@ -23,28 +25,22 @@ export class OperationListComponent implements OnInit, OnDestroy {
   isDisplayingCode = false;
   operationformData: KorniaFormDataControl[] = [];
 
-  @Input() set operationData(value: KorniaFormDataControl[]) {
-    this.operationformData = []
-    value.forEach((v, i) => {
-      this.addOperation(v);
-    })
-  }
-  get operationData() {
-    return this.operationformData;
-  }
-  @Output() operationDataChanged = new EventEmitter<object[]>();
-  @Output() listCleared = new EventEmitter<boolean>();
-  @Output() getCode = new EventEmitter<boolean>();
-
   constructor(
     private augmentationStatusService: AugmentationStatusService,
     private augmentationService: AugmentationService,
+    private operationDataService: OperationDataService
   ) {}
 
   ngOnInit() {
     this.codes_sub = this.augmentationService.codes.subscribe(data => this.codes = data['code']);
     this.operationListSub = this.augmentationStatusService.getOperationList().subscribe(
       data => this.operationList = data);
+    this.operationDataService.operationData.pipe(take(1)).subscribe(data => {
+      this.operationformData = [];
+      data['2D'].forEach((v, i) => {
+        this.addOperation(v);
+      });
+    })
   }
 
   ngOnDestroy() {
@@ -78,7 +74,8 @@ export class OperationListComponent implements OnInit, OnDestroy {
   }
 
   onAugmentationListUpdated() {
-    this.operationDataChanged.emit(this.operationformData);
+    this.operationDataService.operationData.next({"2D": this.operationformData});
+    this.augmentationService.korniaFormData.next(this.operationformData);
   }
 
   onItemSelected(event) {

@@ -24,6 +24,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   operationType: string = 'Aug';
 
   operationData: KorniaFormDataControl[] = [];
+  operationData_sub: Subscription;
 
   constructor(
     private augmentationService: AugmentationService,
@@ -33,23 +34,13 @@ export class SidebarComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.image_sub = this.augmentationService.image.subscribe(img => this.image = img);
     this.in_computing_sub = this.augmentationService.in_computing.subscribe(data => this.in_computing = data);
-    this.operationDataService.operationData.pipe(take(1)).subscribe(data => {this.operationData = data['2D']})
+    this.operationData_sub = this.operationDataService.operationData.subscribe(data => this.operationData = data['2D']);
   }
 
   ngOnDestroy() {
     this.image_sub.unsubscribe();
     this.in_computing_sub.unsubscribe();
-  }
-
-  onOperationTypeChanged(event) {
-    this.operationDataService.updateOperationDataByKey(event);
-    this.operationType = event;
-  }
-
-  onOperationDataChanged(event) {
-    this.operationDataService.saveCurrentOperationData(this.operationType, event);
-    this.augmentationService.korniaFormData.next(event);
-    this.operationData = event;
+    this.operationData_sub.unsubscribe()
   }
 
   onImageBarClicked() {

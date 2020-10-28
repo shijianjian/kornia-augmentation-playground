@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { AugmentationService } from 'src/app/augmentation.service';
 
 @Component({
   selector: 'kornia-params-viewer',
@@ -7,20 +8,25 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class ParamsViewerComponent implements OnInit {
 
-  private augnames;
+  private augnames: string[];
   private _params;
   showDetails = true;
 
   @Input() set params(value: object[]) {
     this._params = value;
-    this.augnames = this.getKeys(value);
+    this.augnames = [];
+    this.augmentationService.korniaFormData.getValue().forEach(ele => {
+      this.augnames.push(ele.name);
+    })
   }
 
   get params() {
     return this._params;
   }
 
-  constructor() { }
+  constructor(
+    private augmentationService: AugmentationService
+  ) { }
 
   ngOnInit() {
   }

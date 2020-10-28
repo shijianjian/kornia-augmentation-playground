@@ -23,25 +23,25 @@ export class OperationDataService {
 
   constructor() { }
 
-  updateOperationDataByKey(item) {
-    if (item == 'Aug') {
-      this.operationData.next(this.augmentationList);
-    } else if (item == 'CV') {
-      this.operationData.next(this.computerVisionList);
-    } else {
-      console.error(`${item} is not implemented.`)
-    }
-  }
+//   updateOperationDataByKey(item) {
+//     if (item == 'Aug') {
+//       this.operationData.next(this.augmentationList);
+//     } else if (item == 'CV') {
+//       this.operationData.next(this.computerVisionList);
+//     } else {
+//       console.error(`${item} is not implemented.`)
+//     }
+//   }
 
-  saveCurrentOperationData(key, data) {
-    if (key == 'Aug') {
-      this.augmentationList = data;
-    } else if (key == 'CV') {
-      this.computerVisionList = data;
-    } else {
-      console.error(`${key} is not implemented.`)
-    }
-  }
+//   saveCurrentOperationData(key, data) {
+//     if (key == 'Aug') {
+//       this.augmentationList = data;
+//     } else if (key == 'CV') {
+//       this.computerVisionList = data;
+//     } else {
+//       console.error(`${key} is not implemented.`)
+//     }
+//   }
 }
 
 interface OperationDataType {
