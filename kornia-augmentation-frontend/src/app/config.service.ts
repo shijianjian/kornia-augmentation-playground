@@ -22,7 +22,7 @@ export class ConfigService{
     return of({'dtypes': ['float32', 'float64']});
   }
   getBatchSizes() {
-    return of({'batchsizes': [8, 16, 32]});
+    return of({'batchsizes': [2, 4, 8, 16]});
   }
 
 }
