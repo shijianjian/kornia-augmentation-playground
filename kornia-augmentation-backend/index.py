@@ -32,10 +32,14 @@ def augmentation_compute():
 	image_tensor = create_image_tensor(image, num=in_batchsize, device=in_device, dtype=in_dtype) / 255.
 	pip = create_pipeline(in_setting)
 	res = pip(image_tensor)
-	params = {se['name']: aug._params for aug, se in zip(pip, in_setting)}
+	def _retreive_params(instance):
+		# if the operation is not an augmentation object
+		return instance._params if hasattr(instance, '_params') else {'batch_prob': torch.Tensor([True] * in_batchsize)}
+	params = {se['name']: _retreive_params(aug) for aug, se in zip(pip, in_setting)}
 	out = tensor_to_images(res)
 	out_param = decode_array_list(params)
 	return jsonify({"images": out, "params": read_dict_params(out_param, num=8)})
+
 
 @app.route('/augmentation/getcode', methods=['POST'])
 def get_augmentation_code():

@@ -1,9 +1,9 @@
-<div *ngIf="index != undefined" style="width: 100%; height: 100%;">
+<div style="width: 100%; height: 100%;">
     <div style="display: flex; justify-content: start; flex-direction: column;">
         <div style="margin: auto; display: flex;">
             <mat-card style="max-width: 70%; max-height: 50%; margin: auto;">
-                <img  mat-card-image src="data:image/png;base64,{{images[index]}}">
-                <kornia-params-viewer [params]="params[index]"></kornia-params-viewer>
+                <img  mat-card-image src="data:image/png;base64,{{image}}">
+                <kornia-params-viewer [params]="param"></kornia-params-viewer>
             </mat-card>
         </div>
     </div>

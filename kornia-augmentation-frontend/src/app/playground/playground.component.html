@@ -7,5 +7,5 @@
             (click)="openDialog()">CONSOLE</button>
     </mat-toolbar>
     <mat-progress-bar mode="indeterminate" *ngIf="in_computing"></mat-progress-bar>
-    <kornia-results style="height: calc(100% - 64px);"></kornia-results>
+    <kornia-results [computing]="in_computing" style="height: calc(100% - 64px);"></kornia-results>
 </div>

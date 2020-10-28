@@ -25,9 +25,9 @@ export class AugmentationStatusService {
       'RandomPosterize',
       'RandomEqualize',
     ],
-    // "Image Manipulations": [
-      // "Canny Edge Detection"
-    // ]
+    "Image Filters": [
+      "MotionBlur"
+    ]
   }
 
   constructor() {}
@@ -88,6 +88,10 @@ export class AugmentationStatusService {
     if (name == "RandomPerspective") {
       return of(object_add_suffix({p: 0.5, distortion_scale: 0.5}, random_id));
     }
+    // For image filters
+    if (name == "MotionBlur") {
+      return of(object_add_suffix({kernel_size: 3, angle: 30, direction: 0.5}, random_id));
+    }
     return of(object_add_suffix({p: 0.5}, random_id));
   }
 
@@ -145,7 +149,7 @@ export class AugmentationStatusService {
       return of([
         this.getCommonFields("kernel_size" + random_id, "kernel_size", 3, 30),
         this.getCommonFields("angle" + random_id, "angle", 0, 360),
-        this.getCommonFields("direction" + random_id, "direction", 0, 1),
+        this.getCommonFields("direction" + random_id, "direction", -1, 1),
         this.getCommonFields("p" + random_id, "Probablities of applying the augmentation", 0, 1)
       ]);
     }
@@ -153,6 +157,14 @@ export class AugmentationStatusService {
       return of([
         this.getCommonFields("distortion_scale" + random_id, "direction", 0, 1),
         this.getCommonFields("p" + random_id, "Probablities of applying the augmentation", 0, 1)
+      ]);
+    }
+    // For image filters
+    if (name == "MotionBlur") {
+      return of([
+        this.getCommonFields("kernel_size" + random_id, "kernel_size, should be odd and positive", 3, 30),
+        this.getCommonFields("angle" + random_id, "angle", 0, 360),
+        this.getCommonFields("direction" + random_id, "direction", -1, 1),
       ]);
     }
     alert(`${name} is not yet supported.`)

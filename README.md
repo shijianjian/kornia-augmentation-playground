@@ -38,8 +38,6 @@ $ python index.py
 
 ## Note
 
-Currently, only ```RandomHorizontalFlip```, ```RandomVerticalFlip``` and ```ColorJitter``` are fully supported.
-
 The future direction shall be:
 1.  supporting all 3D augmentations / visualizations
 2.  supporting in-browser computation by generating ONNX model

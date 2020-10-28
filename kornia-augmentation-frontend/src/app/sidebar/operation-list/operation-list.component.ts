@@ -3,7 +3,6 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { KorniaFormDataControl } from 'src/app/data/utils';
 import { AugmentationStatusService } from 'src/app/data/augmentation-status.service';
 import { Subscription } from 'rxjs';
-import { OperationDataService } from 'src/app/data/operation-data.service';
 import { AugmentationService } from 'src/app/augmentation.service';
 
 @Component({
@@ -104,6 +103,11 @@ export class OperationListComponent implements OnInit, OnDestroy {
 
   onGetModel() {
 
+  }
+
+  onRunIndex(idx) {
+    this.augmentationService.clearCurrentResults();
+    this.augmentationService.computeAugmentation([idx]);
   }
 
 }

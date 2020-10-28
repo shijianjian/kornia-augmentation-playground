@@ -8,9 +8,8 @@ import { Component, Input } from '@angular/core';
 })
 export class ResultsViewerComponent {
 
-  @Input() images;
-  @Input() params;
-  @Input() index;
+  @Input() image;
+  @Input() param;
 
   showPipeline = false;
 

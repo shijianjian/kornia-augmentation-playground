@@ -11,6 +11,7 @@ export class OperationItemComponent {
   @Input() item: KorniaFormDataControl;
   @Output() formUpdated = new EventEmitter<object>();
   @Output() formDeleted = new EventEmitter<object>();
+  @Output() singleRunSelected = new EventEmitter<boolean>();
 
   panel_opened = false;
   show_details = true;
@@ -29,6 +30,10 @@ export class OperationItemComponent {
     if (toRemove) {
       this.formDeleted.emit({"value": toRemove});
     }
+  }
+
+  onRun() {
+    this.singleRunSelected.emit(true);
   }
 
 }

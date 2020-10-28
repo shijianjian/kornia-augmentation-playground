@@ -29,6 +29,7 @@
       class="augmentation-box"
       *ngFor="let item of operationformData; let i = index;"
       cdkDrag
+      (singleRunSelected)="onRunIndex(i)"
       (formUpdated)="onFormUpdated($event, i)"
       (formDeleted)="onFormDeleted($event, i)"
       [item]="item"></kornia-operation-item>

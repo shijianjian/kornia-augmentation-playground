@@ -14,7 +14,14 @@
       [operation]="item"
       (formUpdated)="onFormUpdated($event);"></kornia-auto-form>
     <mat-action-row>
-      <button style="float: right;" mat-button color="warn" (click)="onRemove(); $event.stopPropagation();">Remove</button>
+      <button style="float: right;"
+        mat-button color="warn"
+        matTooltip="Remove this operation"
+        (click)="onRemove(); $event.stopPropagation();">Remove</button>
+      <button style="float: right;"
+        matTooltip="Run this operation only"
+        mat-button color="primary"
+        (click)="onRun(); $event.stopPropagation();">Run</button>
     </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>

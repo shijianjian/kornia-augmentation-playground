@@ -1,8 +1,8 @@
 <kornia-results-viewer
+    [style.visibility]="imageSelected ? 'visible' : 'hidden'"
     class="viewer-panel"
-    [images]="images"
-    [params]="params"
-    [index]="imageSelected"></kornia-results-viewer>
+    [image]="image_to_view"
+    [param]="param_to_view"></kornia-results-viewer>
 <div class="expansion-panel">
     <div *ngIf="images?.length > 0" style="width: 100%; text-align: center;">
         <div class="clickable-icon" style="width: 100%; text-align: center;" (click)="onWrapping(); $event.stopPropagation();">

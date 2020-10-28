@@ -1,6 +1,7 @@
 import torch
 import kornia
 from kornia.augmentation import *
+from kornia.filters import MotionBlur
 
 
 def get_device_by_string(device):
