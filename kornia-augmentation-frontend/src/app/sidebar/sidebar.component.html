@@ -1,16 +1,21 @@
 <mat-drawer-container class="sidebar-container">
-  <div>
-    <div class="image-uploader-bar" (click)="onImageBarClicked(); $event.stopPropagation();">
-      <div style="margin-left: 5px; line-height: 1.8em;">
-        <b *ngIf="!hidden">Image Uploaded</b>
-        <b *ngIf="hidden">IMG&nbsp;</b>
-      </div>
-      <mat-icon *ngIf="image" style="color: greenyellow;">check_circle</mat-icon>
-      <mat-icon *ngIf="!image" color="warn">highlight_off</mat-icon>
+  <div class="image-uploader-bar" (click)="onImageBarClicked(); $event.stopPropagation();">
+    <div style="margin-left: 5px; line-height: 1.8em;">
+      <b *ngIf="!hidden">Image Uploaded</b>
+      <b *ngIf="hidden">IMG&nbsp;</b>
     </div>
-    <kornia-image-uploader *ngIf="showImageUploader"></kornia-image-uploader>
+    <mat-icon *ngIf="image" style="color: greenyellow;">check_circle</mat-icon>
+    <mat-icon *ngIf="!image" color="warn">highlight_off</mat-icon>
   </div>
-
+  <kornia-image-uploader *ngIf="showImageUploader"></kornia-image-uploader>
+  <div style="display: flex; justify-content: space-between; padding-top: 3px;">
+    <div style="margin-left: 5px; line-height: 1.8em;">
+      <b *ngIf="!hidden">Operation Pipeline</b>
+      <b *ngIf="hidden">Ops</b>
+    </div>
+    <mat-icon *ngIf="operationData.length > 0" style="color: greenyellow;">check_circle</mat-icon>
+    <mat-icon *ngIf="operationData.length == 0" color="warn">highlight_off</mat-icon>
+  </div>
 
   <div style="display: flex; flex: 1;">
     <kornia-icon-side-bar
@@ -20,11 +25,6 @@
       
     <div style="flex-grow: 1; width: 400px;" *ngIf="!hidden">
       <div class="expand-sidebar-container">
-        <div style="display: flex; justify-content: space-between; padding-top: 3px;">
-          <div style="margin-left: 5px; line-height: 1.8em;"><b>Augmentation Pipeline</b></div>
-          <mat-icon *ngIf="operationData.length > 0" style="color: greenyellow;">check_circle</mat-icon>
-          <mat-icon *ngIf="operationData.length == 0" color="warn">highlight_off</mat-icon>
-        </div>
         <div style="display: flex; justify-content: space-between;">
           <div style="padding: 1px 5px; line-height: 0.5em;">
             <mat-icon class="clickable-icon" aria-hidden="false" matTooltip="Clear all" (click)="onClearAll()">clear_all</mat-icon>

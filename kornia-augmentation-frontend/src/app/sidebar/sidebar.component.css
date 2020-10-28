@@ -15,6 +15,7 @@
   min-width: 64px;
   height: 100%;
   border-right: 1px solid #555;
+  border-top: 1px solid #555;
 }
 
 .expand-sidebar-container {
