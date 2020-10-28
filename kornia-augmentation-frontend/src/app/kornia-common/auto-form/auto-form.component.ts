@@ -60,7 +60,6 @@ export class AutoFormComponent implements OnInit {
   }
 
   setOperation(operation: KorniaFormDataControl) {
-    console.log(operation)
     this.form.controls[this.autoFormName].setValue(operation.name);
     this.augmentationStatusService
       .getAugmentationFieldData(operation.name, operation.timestamp).subscribe(([model, fields]) => {
@@ -69,10 +68,10 @@ export class AutoFormComponent implements OnInit {
         } else {
           this.model = model;
           this.operation.kwargs = model;
+          this.formUpdated.emit(this.operation);
         }
         this.fields_left = this.mapFields(fields, 'left');
         this.fields_right = this.mapFields(fields, 'right');
-        this.formUpdated.emit(this.operation);
       });
   }
 

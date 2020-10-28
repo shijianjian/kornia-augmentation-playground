@@ -18,33 +18,14 @@
   </div>
 
   <div style="display: flex; flex: 1;">
-    <kornia-icon-side-bar
-      class="icon-sidebar-container"
-      [defaultItem]="operationType"
-      (itemChanged)="onOperationTypeChanged($event)"></kornia-icon-side-bar>
-      
     <div style="flex-grow: 1; width: 400px;" *ngIf="!hidden">
       <div class="expand-sidebar-container">
-        <div style="display: flex; justify-content: space-between;">
-          <div style="padding: 1px 5px; line-height: 0.5em;">
-            <mat-icon class="clickable-icon" aria-hidden="false" matTooltip="Clear all" (click)="onClearAll()">clear_all</mat-icon>
-          </div>
-          <div style="padding: 1px 5px;">
-            <mat-icon class="clickable-icon" aria-hidden="false" matTooltip="Show code" (click)="onGetCode(); $event.stopPropagation();">code</mat-icon>
-            <!-- Implement ONNX later -->
-            <mat-icon class="clickable-icon" aria-hidden="false" matTooltip="Export ONNX model" style="display: none;"
-                (click)="onGetModel(); $event.stopPropagation();">get_app</mat-icon>
-          </div>
-        </div>
         <div class="augmentation-container" style="position: relative;">
           <div *ngIf="!isDisplayingCode" class="augmentation-list-container">
             <kornia-operation-list
               style="flex: 1 1 auto; overflow-y: auto; height: 100px;"
               (operationDataChanged)="onOperationDataChanged($event)"
               [operationData]="operationData"></kornia-operation-list>
-          </div>
-          <div *ngIf="isDisplayingCode" class="coding-block">
-            {{ codes }}
           </div>
           <kornia-action-area
             [disabled]="(operationData.length == 0) || !image || in_computing"

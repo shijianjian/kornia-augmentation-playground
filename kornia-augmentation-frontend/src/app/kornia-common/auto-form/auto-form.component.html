@@ -1,14 +1,4 @@
 <form [formGroup]="form">
-  <div style="margin-bottom: 10px;">
-    <mat-form-field appearance="fill">
-      <mat-label>{{ autoFormName | korniajson }}</mat-label>
-      <mat-select (selectionChange)="onFormControlUpdated(undefined, $event.value);" [formControlName]="autoFormName">
-        <mat-option *ngFor="let item of selectionList" [value]="item">
-          {{item}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
   <div *ngIf="operation?.kwargs" style="display: block;">
     <div style="display: flex; justify-content: space-between; min-width: 300px;">
       <formly-form [model]="model" [fields]="fields_left" [form]="form_left" (modelChange)="onFormControlUpdated(model)"></formly-form>

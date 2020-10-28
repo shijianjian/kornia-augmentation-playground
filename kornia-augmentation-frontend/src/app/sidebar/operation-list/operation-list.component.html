@@ -1,15 +1,39 @@
-<div cdkDropList #mylist class="augmentation-list" (cdkDropListDropped)="drop($event)">
-  <kornia-operation-item
-    class="augmentation-box"
-    *ngFor="let item of operationformData; let i = index;"
-    cdkDrag
-    (formUpdated)="onFormUpdated($event, i)"
-    (formDeleted)="onFormDeleted($event, i)"
-    [item]="item"></kornia-operation-item>
-    <mat-chip-list style="margin-top:1em; display:block;">
-      <mat-chip
-        style="width:80%; margin:auto; text-align: center;"
-        color="primary"
-        (click)="addOperation(undefined)" selected><b style="margin:auto;">+</b></mat-chip>
-    </mat-chip-list>
+<div style="display: flex; justify-content: space-between;">
+  <div style="padding: 1px 5px; line-height: 0.5em;">
+    <mat-icon class="clickable-icon" aria-hidden="false" matTooltip="Clear all" (click)="onClearAll()">clear_all</mat-icon>
+    <mat-icon class="clickable-icon" matTooltip="Add operation" [matMenuTriggerFor]="main_menu">add</mat-icon>
+  </div>
+  <div style="padding: 1px 5px;">
+    <mat-icon class="clickable-icon" aria-hidden="false" matTooltip="Show code" (click)="onGetCode(); $event.stopPropagation();">code</mat-icon>
+    <!-- Implement ONNX later -->
+    <mat-icon class="clickable-icon" aria-hidden="false" matTooltip="Export ONNX model" style="display: none;"
+        (click)="onGetModel(); $event.stopPropagation();">get_app</mat-icon>
+  </div>
+</div>
+
+<ng-container *ngIf="!isDisplayingCode">
+  <mat-menu #main_menu="matMenu">
+    <ng-container *ngFor="let topItem of objectKeys(operationList)">
+      <button mat-menu-item [matMenuTriggerFor]="sub_menu">{{ topItem }}</button>
+      <mat-menu #sub_menu="matMenu">
+        <button
+            *ngFor="let subItem of operationList[topItem]"
+            mat-menu-item
+            (click)="onItemSelected(subItem)">{{ subItem }}</button>
+      </mat-menu>
+    </ng-container>
+  </mat-menu>
+
+  <div cdkDropList #mylist class="augmentation-list" (cdkDropListDropped)="drop($event)">
+    <kornia-operation-item
+      class="augmentation-box"
+      *ngFor="let item of operationformData; let i = index;"
+      cdkDrag
+      (formUpdated)="onFormUpdated($event, i)"
+      (formDeleted)="onFormDeleted($event, i)"
+      [item]="item"></kornia-operation-item>
+  </div>
+</ng-container>
+<div *ngIf="isDisplayingCode" class="coding-block">
+  {{ codes }}
 </div>

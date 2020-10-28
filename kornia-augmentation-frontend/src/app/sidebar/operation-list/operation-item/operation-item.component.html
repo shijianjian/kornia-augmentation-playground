@@ -2,7 +2,7 @@
   <mat-expansion-panel (opened)="onOpened()" (closed)="onClosed()">
     <mat-expansion-panel-header style="height: auto; color:antiquewhite">
       <mat-panel-title style="width: 100%; min-height: 50px;">
-        <div *ngIf="!panel_opened">
+        <div>
           <p>{{ item?.name }}</p>
           <mat-panel-description *ngIf="!panel_opened && show_details">{{ item?.kwargs | korniajson }}</mat-panel-description>
         </div>
@@ -13,6 +13,8 @@
       style="padding-top: 10px;"
       [operation]="item"
       (formUpdated)="onFormUpdated($event);"></kornia-auto-form>
-    <button style="float: right;" mat-button color="warn" (click)="onRemove(); $event.stopPropagation();">Remove</button>
+    <mat-action-row>
+      <button style="float: right;" mat-button color="warn" (click)="onRemove(); $event.stopPropagation();">Remove</button>
+    </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>

@@ -7,23 +7,28 @@ import { object_add_suffix, get_random_id } from "./utils";
 @Injectable()
 export class AugmentationStatusService {
 
-  private supported_augmentation_list = [
-    'RandomHorizontalFlip',
-    'RandomVerticalFlip',
-    'RandomRotation',
-    'RandomAffine',
-    'RandomPerspective',
-    'RandomErasing',
-    'CenterCrop',
-    'RandomCrop',
-    'RandomResizedCrop',
-    'RandomMotionBlur',
-    'ColorJitter',
-    'RandomGrayscale',
-    'RandomSolarize',
-    'RandomPosterize',
-    'RandomEqualize',
-  ]
+  private supported_augmentation_list = {
+    "Image Augmentations": [
+      'RandomHorizontalFlip',
+      'RandomVerticalFlip',
+      'RandomRotation',
+      'RandomAffine',
+      'RandomPerspective',
+      // 'RandomErasing',
+      // 'CenterCrop',
+      // 'RandomCrop',
+      // 'RandomResizedCrop',
+      'RandomMotionBlur',
+      'ColorJitter',
+      'RandomGrayscale',
+      'RandomSolarize',
+      'RandomPosterize',
+      'RandomEqualize',
+    ],
+    // "Image Manipulations": [
+      // "Canny Edge Detection"
+    // ]
+  }
 
   constructor() {}
 
@@ -42,6 +47,10 @@ export class AugmentationStatusService {
   }
 
   getAugmentationList(): Observable<any> {
+    return of(this.supported_augmentation_list["Image Augmentations"]);
+  }
+
+  getOperationList(): Observable<any> {
     return of(this.supported_augmentation_list);
   }
 
@@ -146,10 +155,9 @@ export class AugmentationStatusService {
         this.getCommonFields("p" + random_id, "Probablities of applying the augmentation", 0, 1)
       ]);
     }
-    console.log(name)
     alert(`${name} is not yet supported.`)
     return of([this.getCommonFields("p" + random_id, "This function has not been added yet.", 0, 1)]);
-    }
+  }
 
   getCommonFields(key, label, min, max) {
     return {

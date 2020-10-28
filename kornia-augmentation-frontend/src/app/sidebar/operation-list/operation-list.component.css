@@ -41,3 +41,15 @@ border: none;
 .example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
 transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
+
+.clickable-icon:hover {
+    cursor: pointer;
+}
+
+.coding-block {
+  white-space: pre-wrap;
+  padding: 10px;
+  border: 2px dotted #555;
+}
+
+  
