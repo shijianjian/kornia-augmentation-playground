@@ -54,8 +54,8 @@ export class OperationListComponent implements OnInit, OnDestroy {
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.operationData, event.previousIndex, event.currentIndex);
-    this.updateFormDataIndex(event.previousIndex, event.currentIndex);
+    moveItemInArray(this.operationformData, event.previousIndex, event.currentIndex);
+    this.onAugmentationListUpdated();
   }
 
   addOperation(operation: KorniaFormDataControl) {
@@ -82,13 +82,6 @@ export class OperationListComponent implements OnInit, OnDestroy {
     this.operationDataChanged.emit(this.operationformData);
   }
 
-  updateFormDataIndex(previousIndex: number, currentIndex: number) {
-    let element = this.operationformData[previousIndex];
-    this.operationformData.splice(previousIndex, 1);
-    this.operationformData.splice(currentIndex, 0, element);
-    this.onAugmentationListUpdated();
-  }
-
   onItemSelected(event) {
     let op = new KorniaFormDataControl(event, null);
     this.addOperation(op);
@@ -96,8 +89,9 @@ export class OperationListComponent implements OnInit, OnDestroy {
 
   onClearAll() {
     if (confirm("You are going to delete all operations.")) {
-      this.operationData = [];
+      this.operationformData = [];
       this.augmentationService.clearCurrentResults();
+      this.onAugmentationListUpdated();
     }
   }
 

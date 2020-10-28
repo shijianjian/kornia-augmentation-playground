@@ -11,19 +11,19 @@
   </div>
 </div>
 
-<ng-container *ngIf="!isDisplayingCode">
-  <mat-menu #main_menu="matMenu">
-    <ng-container *ngFor="let topItem of objectKeys(operationList)">
-      <button mat-menu-item [matMenuTriggerFor]="sub_menu">{{ topItem }}</button>
-      <mat-menu #sub_menu="matMenu">
-        <button
-            *ngFor="let subItem of operationList[topItem]"
-            mat-menu-item
-            (click)="onItemSelected(subItem)">{{ subItem }}</button>
-      </mat-menu>
-    </ng-container>
-  </mat-menu>
+<mat-menu #main_menu="matMenu">
+  <ng-container *ngFor="let topItem of objectKeys(operationList)">
+    <button mat-menu-item [matMenuTriggerFor]="sub_menu">{{ topItem }}</button>
+    <mat-menu #sub_menu="matMenu">
+      <button
+          *ngFor="let subItem of operationList[topItem]"
+          mat-menu-item
+          (click)="onItemSelected(subItem)">{{ subItem }}</button>
+    </mat-menu>
+  </ng-container>
+</mat-menu>
 
+<ng-container *ngIf="!isDisplayingCode">
   <div cdkDropList #mylist class="augmentation-list" (cdkDropListDropped)="drop($event)">
     <kornia-operation-item
       class="augmentation-box"

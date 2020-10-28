@@ -15,5 +15,9 @@
 
 ::ng-deep .device-group-btn .mat-radio-label-content {
     border: none !important;
-    height: 32px;
+    line-height: 2.5em;
+}
+
+::ng-deep .mat-radio-container {
+    display: none !important;
 }
