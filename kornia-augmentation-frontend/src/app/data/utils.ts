@@ -71,7 +71,7 @@ export namespace OperationTypes {
         console.error(type);
     }
 
-    export function getColorByKey(type: OperationTypes): string {
+    export function getColorByKey(type: OperationTypes | string): string {
         if (type == OperationTypes.IMAGE_AUG) {
             return "#673ab7";
         }
@@ -80,7 +80,7 @@ export namespace OperationTypes {
         }
     }
 
-    export function getShorthand(type: OperationTypes): string {
+    export function getShorthand(type: OperationTypes | string): string {
         if (type == OperationTypes.IMAGE_AUG) {
             return "AUG";
         }
