@@ -3,7 +3,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 
 import { AugmentationStatusService } from '../../data/augmentation-status.service';
-import { KorniaFormDataControl, get_random_id } from "src/app/data/utils";
+import { KorniaFormDataControl, get_random_id, OperationTypes } from "src/app/data/utils";
 
 @Component({
   selector: 'kornia-auto-form',
@@ -46,7 +46,7 @@ export class AutoFormComponent implements OnInit {
   onFormControlUpdated(kwargs: object, name?: string) {
     if (this.operation == undefined) {
       // define the operation if it has not been set yet
-      this.operation = new KorniaFormDataControl(name, kwargs);
+      this.operation = new KorniaFormDataControl(name, kwargs, undefined, OperationTypes.IMAGE_AUG);
       this.setOperation(this.operation);
     } else {
       if (this.form_left.valid && this.form_right.valid) {

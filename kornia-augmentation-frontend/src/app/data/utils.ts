@@ -31,8 +31,9 @@ export class KorniaFormDataControl {
     private _name: string;
     private _kwargs: object;
     private _timestamp: string;
+    private _opType: string;
 
-    constructor(name: string, kwargs: object, timestamp?: string) {
+    constructor(name: string, kwargs: object, timestamp?: string, opType?: OperationTypes) {
         this._name = name;
         this._kwargs = kwargs;
         if (timestamp) {
@@ -40,13 +41,51 @@ export class KorniaFormDataControl {
         } else {
             this._timestamp = get_random_id()
         }
+        if (opType) this._opType = opType;
     }
 
     get name() { return this._name; }
     get kwargs() { return this._kwargs; }
     get timestamp() { return this._timestamp; }
+    get opType() { return this._opType; }
 
     set name(value) { this._name = value; }
     set kwargs(value) { this._kwargs = value; }
+    set opType(value) { this._opType = value; }
 
+}
+
+export enum OperationTypes {
+    IMAGE_AUG="Image Augmentations",
+    IMAGE_FILTERS="Image Filters"
+}
+
+export namespace OperationTypes {
+    export function getKeyByValue(type: string): OperationTypes {
+        if (type == "Image Augmentations") {
+            return OperationTypes.IMAGE_AUG;
+        }
+        if (type == "Image Filters") {
+            return OperationTypes.IMAGE_FILTERS;
+        }
+        console.error(type);
+    }
+
+    export function getColorByKey(type: OperationTypes): string {
+        if (type == OperationTypes.IMAGE_AUG) {
+            return "#673ab7";
+        }
+        if (type == OperationTypes.IMAGE_FILTERS) {
+            return "#f44336"
+        }
+    }
+
+    export function getShorthand(type: OperationTypes): string {
+        if (type == OperationTypes.IMAGE_AUG) {
+            return "AUG";
+        }
+        if (type == OperationTypes.IMAGE_FILTERS) {
+            return "FLT"
+        }
+    }
 }

@@ -16,7 +16,10 @@ export class ParamsViewerComponent implements OnInit {
     this._params = value;
     this.augnames = [];
     this.augmentationService.korniaFormData.getValue().forEach(ele => {
-      this.augnames.push(ele.name);
+      if (value[ele.name] != undefined) {
+        this.augnames.push(ele.name);
+        console.log(this.augnames)
+      }
     })
   }
 

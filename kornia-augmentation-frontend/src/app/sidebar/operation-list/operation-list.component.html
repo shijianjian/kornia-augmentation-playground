@@ -18,7 +18,7 @@
       <button
           *ngFor="let subItem of operationList[topItem]"
           mat-menu-item
-          (click)="onItemSelected(subItem)">{{ subItem }}</button>
+          (click)="onItemSelected({'name': subItem, 'type': topItem})">{{ subItem }}</button>
     </mat-menu>
   </ng-container>
 </mat-menu>

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { KorniaFormDataControl } from 'src/app/data/utils';
+import { KorniaFormDataControl, OperationTypes } from 'src/app/data/utils';
 import { AugmentationStatusService } from 'src/app/data/augmentation-status.service';
 import { Subscription } from 'rxjs';
 import { AugmentationService } from 'src/app/augmentation.service';
@@ -79,7 +79,7 @@ export class OperationListComponent implements OnInit, OnDestroy {
   }
 
   onItemSelected(event) {
-    let op = new KorniaFormDataControl(event, null);
+    let op = new KorniaFormDataControl(event['name'], null, undefined, OperationTypes.getKeyByValue(event['type']));
     this.addOperation(op);
   }
 

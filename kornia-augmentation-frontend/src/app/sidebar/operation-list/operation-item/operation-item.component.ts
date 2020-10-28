@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { KorniaFormDataControl } from 'src/app/data/utils';
+import { KorniaFormDataControl, OperationTypes } from 'src/app/data/utils';
 
 @Component({
   selector: 'kornia-operation-item',
@@ -15,6 +15,9 @@ export class OperationItemComponent {
 
   panel_opened = false;
   show_details = true;
+
+  getShorthand = OperationTypes.getShorthand
+  getColorByKey = OperationTypes.getColorByKey
 
   constructor() { }
 

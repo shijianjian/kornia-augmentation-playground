@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { MatButtonModule, MatTooltipModule } from '@angular/material';
+import { MatButtonModule, MatChipsModule, MatTooltipModule } from '@angular/material';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -22,6 +22,7 @@ import { KorniaPipesModule } from 'src/app/pipes/kornia-pipes.module';
     MatIconModule,
     MatButtonModule,
     MatTooltipModule,
+    MatChipsModule,
     KorniaCommonModule,
     KorniaPipesModule
   ],
