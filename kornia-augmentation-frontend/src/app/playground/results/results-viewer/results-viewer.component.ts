@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { AugmentationService } from 'src/app/augmentation.service';
 
 
 @Component({
@@ -13,10 +14,16 @@ export class ResultsViewerComponent {
 
   showPipeline = false;
 
-  constructor() { }
+  constructor(
+    private augmentationService: AugmentationService
+  ) { }
 
   onCheckPipeline() {
     this.showPipeline = !this.showPipeline;
+  }
+
+  onSendToImage() {
+    this.augmentationService.sendBase64AsImage(this.image);
   }
 
 }

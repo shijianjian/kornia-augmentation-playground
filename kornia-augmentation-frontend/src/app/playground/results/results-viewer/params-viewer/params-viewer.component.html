@@ -1,18 +1,18 @@
 
-<mat-list *ngIf="params">
-  <mat-slide-toggle style="float: right;" color="primary" matTooltip='Show Parameters' [checked]="showDetails" (toggleChange)="onToggle()"></mat-slide-toggle>
-  <ng-container *ngIf="showDetails">
-  <ng-container *ngFor="let name of augnames">
-      <mat-list-item>
-        <mat-icon *ngIf="params[name]['batch_prob']" matTooltip='Applied Augmentation' style="color: greenyellow;">check_circle</mat-icon>
-        <mat-icon *ngIf="!params[name]['batch_prob']" matTooltip='Not Applied Augmentation' color="warn">highlight_off</mat-icon>
-        &nbsp;&nbsp;{{name}}
-      </mat-list-item>
-      <mat-list style="margin-left: 30px;">
-          <div *ngFor="let item of getKeys(params[name])">
-              <mat-list-item *ngIf="item != 'batch_prob'">{{ item }}: {{ params[name][item] | json }}</mat-list-item>
-          </div>
-      </mat-list>
-  </ng-container>
-  </ng-container>
+<mat-list *ngIf="params" style="display: flex; flex-direction: row-reverse; justify-content: space-between;">
+  <mat-slide-toggle color="primary" matTooltip='Show Parameters' [checked]="showDetails" (toggleChange)="onToggle()"></mat-slide-toggle>
+  <div *ngIf="showDetails">
+    <ng-container *ngFor="let name of augnames">
+        <mat-list-item>
+          <mat-icon *ngIf="params[name]['batch_prob']" matTooltip='Applied Augmentation' style="color: greenyellow;">check_circle</mat-icon>
+          <mat-icon *ngIf="!params[name]['batch_prob']" matTooltip='Not Applied Augmentation' color="warn">highlight_off</mat-icon>
+          &nbsp;&nbsp;{{name}}
+        </mat-list-item>
+        <mat-list style="margin-left: 30px;">
+            <div *ngFor="let item of getKeys(params[name])">
+                <mat-list-item *ngIf="item != 'batch_prob'">{{ item }}: {{ params[name][item] | json }}</mat-list-item>
+            </div>
+        </mat-list>
+    </ng-container>
+  </div>
 </mat-list>

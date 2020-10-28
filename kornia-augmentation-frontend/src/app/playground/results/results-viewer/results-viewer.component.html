@@ -2,7 +2,12 @@
     <div style="display: flex; justify-content: start; flex-direction: column;">
         <div style="margin: auto; display: flex;">
             <mat-card style="max-width: 70%; max-height: 50%; margin: auto;">
-                <img  mat-card-image src="data:image/png;base64,{{image}}">
+                <div style="margin: -11px; margin-bottom: -1px;">
+                    <mat-icon
+                        matTooltip="Take this image as input."
+                        (click)="onSendToImage($event); $event.stopPropagation();">reply</mat-icon>
+                </div>
+                <img mat-card-image src="data:image/png;base64,{{image}}">
                 <kornia-params-viewer [params]="param"></kornia-params-viewer>
             </mat-card>
         </div>

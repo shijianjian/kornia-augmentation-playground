@@ -103,4 +103,20 @@ export class AugmentationService{
   clearCurrentResults() {
     this.results.next({images: [], params: []});
   }
+
+  sendBase64AsImage(base64: string) {
+    this.image.next(base64ToBlob(base64));
+  }
+}
+
+
+export function base64ToBlob(base64: string): Blob {
+  const byteString: string = window.atob(base64);
+  const arrayBuffer: ArrayBuffer = new ArrayBuffer(byteString.length);
+  const int8Array: Uint8Array = new Uint8Array(arrayBuffer);
+  for (let i = 0; i < byteString.length; i++) {
+    int8Array[i] = byteString.charCodeAt(i);
+  }
+  const blob = new Blob([int8Array], { type: "image/png" });
+  return blob
 }

@@ -4,7 +4,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { OperationItemModule } from './operation-item/operation-item.module';
 import { OperationListComponent } from './operation-list.component';
-import { MatButtonModule, MatChipsModule, MatIconModule, MatMenuModule } from '@angular/material';
+import { MatButtonModule, MatChipsModule, MatIconModule, MatMenuModule, MatTooltipModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -17,6 +17,7 @@ import { MatButtonModule, MatChipsModule, MatIconModule, MatMenuModule } from '@
     MatIconModule,
     MatMenuModule,
     MatButtonModule,
+    MatTooltipModule,
     OperationItemModule
   ],
   exports: [
